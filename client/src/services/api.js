@@ -48,4 +48,11 @@ export const recommendationAPI = {
   list: () => api.get('/recommendations'),
 };
 
+// Export APIs
+export const exportAPI = {
+  costs: (startDate, endDate) => api.post('/export/costs', { startDate, endDate }),
+  billing: (startDate, endDate) => api.post('/export/billing', { startDate, endDate }),
+  dateRange: () => api.get('/export/date-range'),
+};
+
 export default api;

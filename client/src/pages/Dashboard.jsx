@@ -13,6 +13,25 @@ import {
 const SERVICE_COLORS = ['#1a73e8', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6', '#ec4899'];
 const TYPE_COLORS = { Compute: '#1a73e8', Storage: '#f59e0b', Database: '#8b5cf6', Network: '#10b981' };
 
+// Reusable Card Component
+function Card({ title, children, className = '' }) {
+  return (
+    <div className={`bg-white dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-dark-border p-5 shadow-lg flex flex-col ${className}`}>
+      {title && <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-4">{title}</h3>}
+      {children}
+    </div>
+  );
+}
+
+// Chart Wrapper Component
+function ChartWrapper({ children }) {
+  return (
+    <div className="flex-1 min-h-0">
+      {children}
+    </div>
+  );
+}
+
 // Animated counter hook
 function useAnimatedCounter(target, duration = 1200) {
   const [count, setCount] = useState(0);
@@ -113,28 +132,18 @@ export default function Dashboard() {
   const dailyConverted = daily.map(d => ({ ...d, cost: rawConvert(d.cost) }));
   const monthlyConverted = monthly.map(d => ({ ...d, cost: rawConvert(d.cost) }));
 
-  // Group services by type for bar chart
   const typeData = Object.entries(
     services.reduce((acc, s) => { acc[s.type] = (acc[s.type] || 0) + s.cost; return acc; }, {})
   ).map(([type, cost]) => ({ type, cost: rawConvert(cost) }));
 
-  // Cumulative daily spend for area chart
   let cumulative = 0;
   const cumulativeDaily = dailyConverted.map(d => {
     cumulative += d.cost;
     return { ...d, cumulative: Math.round(cumulative) };
   });
 
-  // Radar data for service comparison
-  const maxCost = Math.max(...services.map(s => s.cost));
-  const radarData = services.map(s => ({
-    name: s.name,
-    cost: Math.round((s.cost / maxCost) * 100),
-  }));
-
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
         <p className="text-sm text-gray-500 dark:text-dark-muted mt-0.5">
@@ -142,7 +151,6 @@ export default function Dashboard() {
         </p>
       </div>
 
-      {/* Stat cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard title="Total Cost (This Month)" value={rawConvert(summary?.totalCost || 0)}
           displayValue={(v) => `${currencySymbol}${v.toLocaleString()}`}
@@ -159,8 +167,7 @@ export default function Dashboard() {
           icon={HiOutlineCalendar} color="bg-gradient-to-br from-violet-500 to-violet-600" delay={4} />
       </div>
 
-      {/* Budget Progress Bar */}
-      <div className="bg-white dark:bg-dark-card rounded-xl border border-gray-100 dark:border-dark-border p-5 shadow-card">
+      <Card>
         <div className="flex items-center justify-between mb-2">
           <h3 className="text-sm font-semibold text-gray-800 dark:text-white">Budget Usage</h3>
           <span className={`text-sm font-bold ${budgetPercent > 80 ? 'text-red-500' : budgetPercent > 60 ? 'text-amber-500' : 'text-emerald-500'}`}>
@@ -179,13 +186,11 @@ export default function Dashboard() {
         <p className="text-xs text-gray-400 dark:text-dark-muted mt-2">
           {convertCost(summary?.totalCost || 0)} of {convertCost(summary?.budget || 0)} budget used
         </p>
-      </div>
+      </Card>
 
-      {/* Row 1: Daily Cost Trend (Area) + Cost by Service (Donut) */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        <div className="lg:col-span-2 bg-white dark:bg-dark-card rounded-xl border border-gray-100 dark:border-dark-border p-5 shadow-card">
-          <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-4">Daily Cost Trend (Last 30 Days)</h3>
-          <ResponsiveContainer width="100%" height={240}>
+      <Card title="Daily Cost Trend (Last 30 Days)" className="h-[350px]">
+        <ChartWrapper>
+          <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={dailyConverted}>
               <defs>
                 <linearGradient id="dailyGrad" x1="0" y1="0" x2="0" y2="1">
@@ -200,103 +205,103 @@ export default function Dashboard() {
               <Area type="monotone" dataKey="cost" stroke="#1a73e8" fill="url(#dailyGrad)" strokeWidth={2.5} name="Daily Cost" />
             </AreaChart>
           </ResponsiveContainer>
-        </div>
+        </ChartWrapper>
+      </Card>
 
-        <div className="bg-white dark:bg-dark-card rounded-xl border border-gray-100 dark:border-dark-border p-5 shadow-card">
-          <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-4">Cost by Service</h3>
-          <ResponsiveContainer width="100%" height={200}>
-            <PieChart>
-              <Pie data={services} dataKey="cost" nameKey="name" cx="50%" cy="50%"
-                outerRadius={75} innerRadius={45} strokeWidth={2}>
-                {services.map((_, i) => (<Cell key={i} fill={SERVICE_COLORS[i % SERVICE_COLORS.length]} />))}
-              </Pie>
-              <Tooltip formatter={(v) => convertCost(v)} />
-            </PieChart>
-          </ResponsiveContainer>
-          <div className="space-y-2 mt-3">
-            {services.map((s, i) => (
-              <div key={i} className="flex items-center justify-between text-sm">
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: SERVICE_COLORS[i % SERVICE_COLORS.length] }} />
-                  <span className="text-gray-600 dark:text-dark-muted">{s.name}</span>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+        <Card title="Cost by Type" className="h-[350px]">
+          <ChartWrapper>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={typeData} barSize={35}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+                <XAxis dataKey="type" tick={{ fontSize: 10 }} stroke="#94a3b8" />
+                <YAxis tick={{ fontSize: 10 }} stroke="#94a3b8" tickFormatter={v => `${currencySymbol}${v}`} />
+                <Tooltip content={<CustomTooltip />} />
+                <Bar dataKey="cost" radius={[4, 4, 0, 0]} name="Cost">
+                  {typeData.map((entry, i) => (
+                    <Cell key={i} fill={TYPE_COLORS[entry.type] || '#6b7280'} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartWrapper>
+        </Card>
+
+        <Card title="Cost by Service" className="h-[350px]">
+          <div className="flex-1 overflow-y-auto space-y-3 pr-2">
+            {services.sort((a, b) => b.cost - a.cost).map((s, i) => {
+              const maxServiceCost = services[0]?.cost || 1;
+              const pct = ((s.cost / maxServiceCost) * 100).toFixed(0);
+              return (
+                <div key={i}>
+                  <div className="flex justify-between text-sm mb-1.5">
+                    <span className="text-gray-700 dark:text-white font-medium">{s.name}</span>
+                    <span className="text-gray-500 dark:text-dark-muted font-semibold">{convertCost(s.cost)}</span>
+                  </div>
+                  <div className="w-full h-3 bg-gray-100 dark:bg-dark-border rounded-full overflow-hidden">
+                    <div className="h-full rounded-full transition-all duration-700"
+                      style={{ width: `${pct}%`, backgroundColor: SERVICE_COLORS[i % SERVICE_COLORS.length] }} />
+                  </div>
                 </div>
-                <span className="font-semibold text-gray-900 dark:text-white">{convertCost(s.cost)}</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
-        </div>
+        </Card>
+
+        <Card title="Service Distribution" className="h-[350px]">
+          <ChartWrapper>
+            <div className="flex items-center justify-center h-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie data={services} dataKey="cost" nameKey="name" cx="50%" cy="50%"
+                    outerRadius="70%" innerRadius="50%" strokeWidth={2}>
+                    {services.map((_, i) => (<Cell key={i} fill={SERVICE_COLORS[i % SERVICE_COLORS.length]} />))}
+                  </Pie>
+                  <Tooltip formatter={(v) => convertCost(v)} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </ChartWrapper>
+        </Card>
       </div>
 
-      {/* Row 2: Cost by Type Bar Chart + Cumulative Spend Area */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="bg-white dark:bg-dark-card rounded-xl border border-gray-100 dark:border-dark-border p-5 shadow-card">
-          <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-4">Cost by Service Type</h3>
-          <ResponsiveContainer width="100%" height={260}>
-            <BarChart data={typeData} barSize={45}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
-              <XAxis dataKey="type" tick={{ fontSize: 12 }} stroke="#94a3b8" />
-              <YAxis tick={{ fontSize: 11 }} stroke="#94a3b8" tickFormatter={v => `${currencySymbol}${v.toLocaleString()}`} />
-              <Tooltip content={<CustomTooltip />} />
-              <Bar dataKey="cost" radius={[6, 6, 0, 0]} name="Cost">
-                {typeData.map((entry, i) => (
-                  <Cell key={i} fill={TYPE_COLORS[entry.type] || '#6b7280'} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+        <Card title="Monthly Trend" className="h-[350px]">
+          <ChartWrapper>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={monthlyConverted}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+                <XAxis dataKey="month" tick={{ fontSize: 10 }} stroke="#94a3b8" />
+                <YAxis tick={{ fontSize: 10 }} stroke="#94a3b8" tickFormatter={v => `${currencySymbol}${v}`} />
+                <Tooltip content={<CustomTooltip />} />
+                <Line type="monotone" dataKey="cost" stroke="#8b5cf6" strokeWidth={2} dot={{ r: 3, fill: '#8b5cf6' }} name="Monthly" />
+              </LineChart>
+            </ResponsiveContainer>
+          </ChartWrapper>
+        </Card>
 
-        <div className="bg-white dark:bg-dark-card rounded-xl border border-gray-100 dark:border-dark-border p-5 shadow-card">
-          <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-4">Cumulative Spend (This Month)</h3>
-          <ResponsiveContainer width="100%" height={260}>
-            <AreaChart data={cumulativeDaily}>
-              <defs>
-                <linearGradient id="cumGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.2} />
-                  <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
-              <XAxis dataKey="date" tick={{ fontSize: 11 }} tickFormatter={v => v.slice(5)} stroke="#94a3b8" />
-              <YAxis tick={{ fontSize: 11 }} stroke="#94a3b8" tickFormatter={v => `${currencySymbol}${v.toLocaleString()}`} />
-              <Tooltip content={<CustomTooltip />} />
-              <Area type="monotone" dataKey="cumulative" stroke="#8b5cf6" fill="url(#cumGrad)" strokeWidth={2} name="Cumulative" />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
+        <Card title="Cumulative Spend" className="h-[350px]">
+          <ChartWrapper>
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={cumulativeDaily}>
+                <defs>
+                  <linearGradient id="cumGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.2} />
+                    <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+                <XAxis dataKey="date" tick={{ fontSize: 11 }} tickFormatter={v => v.slice(5)} stroke="#94a3b8" />
+                <YAxis tick={{ fontSize: 11 }} stroke="#94a3b8" tickFormatter={v => `${currencySymbol}${v.toLocaleString()}`} />
+                <Tooltip content={<CustomTooltip />} />
+                <Area type="monotone" dataKey="cumulative" stroke="#8b5cf6" fill="url(#cumGrad)" strokeWidth={2} name="Cumulative" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </ChartWrapper>
+        </Card>
       </div>
 
-      {/* Row 3: Monthly Comparison + Service Radar */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="bg-white dark:bg-dark-card rounded-xl border border-gray-100 dark:border-dark-border p-5 shadow-card">
-          <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-4">Monthly Cost Comparison</h3>
-          <ResponsiveContainer width="100%" height={260}>
-            <BarChart data={monthlyConverted} barSize={35}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
-              <XAxis dataKey="month" tick={{ fontSize: 11 }} stroke="#94a3b8" />
-              <YAxis tick={{ fontSize: 11 }} stroke="#94a3b8" tickFormatter={v => `${currencySymbol}${v.toLocaleString()}`} />
-              <Tooltip content={<CustomTooltip />} />
-              <Bar dataKey="cost" fill="#1a73e8" radius={[6, 6, 0, 0]} name="Monthly Cost" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div className="bg-white dark:bg-dark-card rounded-xl border border-gray-100 dark:border-dark-border p-5 shadow-card">
-          <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-4">Service Cost Distribution (Radar)</h3>
-          <ResponsiveContainer width="100%" height={260}>
-            <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="70%">
-              <PolarGrid stroke="#e2e8f0" />
-              <PolarAngleAxis dataKey="name" tick={{ fontSize: 11 }} stroke="#94a3b8" />
-              <PolarRadiusAxis tick={{ fontSize: 10 }} stroke="#94a3b8" />
-              <Radar name="Cost %" dataKey="cost" stroke="#1a73e8" fill="#1a73e8" fillOpacity={0.2} strokeWidth={2} />
-            </RadarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      {/* Top 3 Cost Drivers */}
-      <div className="bg-white dark:bg-dark-card rounded-xl border border-gray-100 dark:border-dark-border p-5 shadow-card">
-        <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-4">Top 3 Cost Drivers</h3>
+      <Card title="Top 3 Cost Drivers">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {top3.map((s, i) => (
             <div key={i} className="flex items-center gap-4 p-4 rounded-lg bg-gray-50 dark:bg-dark-border/30">
@@ -312,7 +317,7 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
-      </div>
+      </Card>
     </div>
   );
 }

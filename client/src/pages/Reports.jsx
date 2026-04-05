@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { costAPI } from '../services/api';
+import { costAPI, exportAPI } from '../services/api';
 import { useApp } from '../context/AppContext';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -35,18 +35,22 @@ export default function Reports() {
   const [services, setServices] = useState([]);
   const [range, setRange] = useState('3months');
   const [loading, setLoading] = useState(true);
+  const [exporting, setExporting] = useState(false);
+  const [dateRange, setDateRange] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const [monRes, dayRes, svcRes] = await Promise.all([
+        const [monRes, dayRes, svcRes, rangeRes] = await Promise.all([
           costAPI.monthly(),
           costAPI.daily(),
           costAPI.services(),
+          exportAPI.dateRange(),
         ]);
         setMonthly(monRes.data);
         setDaily(dayRes.data);
         setServices(svcRes.data.filter(s => s.status === 'active'));
+        setDateRange(rangeRes.data);
       } catch (err) {
         console.error(err);
       } finally {
@@ -100,17 +104,28 @@ export default function Reports() {
     services.reduce((acc, s) => { acc[s.type] = (acc[s.type] || 0) + s.cost; return acc; }, {})
   ).map(([type, cost]) => ({ name: type, value: rawConvert(cost) }));
 
-  // Export CSV
-  const handleExport = () => {
-    const header = 'Month,Cost\n';
-    const rows = monthly.map(m => `${m.month},${m.cost}`).join('\n');
-    const blob = new Blob([header + rows], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'cost-report.csv';
-    a.click();
-    URL.revokeObjectURL(url);
+  // Export to S3 and download
+  const handleExport = async () => {
+    if (!dateRange?.hasData) return;
+
+    setExporting(true);
+    try {
+      const response = await exportAPI.costs(dateRange.startDate, dateRange.endDate);
+      
+      if (response.data.success) {
+        // Auto-download the file from S3
+        const link = document.createElement('a');
+        link.href = response.data.downloadUrl;
+        link.download = `cost-report-${dateRange.startDate}-to-${dateRange.endDate}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    } catch (err) {
+      console.error('Export error:', err);
+    } finally {
+      setExporting(false);
+    }
   };
 
   // Stats
@@ -129,9 +144,10 @@ export default function Reports() {
           </p>
         </div>
         <button onClick={handleExport}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-[#1a73e8] hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+          disabled={exporting || !dateRange?.hasData}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-[#1a73e8] hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
           <HiOutlineDownload className="w-4 h-4" />
-          Export CSV
+          {exporting ? 'Exporting...' : 'Export to S3'}
         </button>
       </div>
 

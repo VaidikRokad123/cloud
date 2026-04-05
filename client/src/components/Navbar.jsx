@@ -20,6 +20,12 @@ export default function Navbar({ onMenuClick }) {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const title = PAGE_TITLES[location.pathname] || 'Dashboard';
 
+  const handleLogout = () => {
+    setShowUserMenu(false);
+    logout();
+    navigate('/login');
+  };
+
   return (
     <header className="sticky top-0 z-10 h-[64px] bg-white/70 dark:bg-[#0c1222]/70 backdrop-blur-xl border-b border-gray-200/60 dark:border-white/[.06] flex items-center justify-between px-5 lg:px-7 transition-all duration-300">
       <div className="flex items-center gap-4">
