@@ -81,19 +81,6 @@ export default function Sidebar({ open, onClose }) {
             );
           })}
         </nav>
-
-        {/* Footer */}
-        <div className="px-5 py-4 border-t border-gray-200 dark:border-white/[.06] transition-colors duration-300">
-          <div className="flex items-center gap-3 p-3 rounded-xl bg-gray-100 dark:bg-white/[.04] border border-gray-200 dark:border-white/[.06] transition-all duration-300">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#f59e0b] to-[#d97706] flex items-center justify-center text-white text-xs font-bold shadow-glow transition-all duration-300">
-              A
-            </div>
-            <div>
-              <p className="text-xs font-medium text-gray-900 dark:text-slate-300 leading-tight transition-colors duration-300">Admin User</p>
-              <p className="text-[10px] text-gray-500 dark:text-slate-500 transition-colors duration-300">Free Plan</p>
-            </div>
-          </div>
-        </div>
       </aside>
     </>
   );

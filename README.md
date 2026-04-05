@@ -1,6 +1,6 @@
 # ☁️ CloudCost - Cloud Infrastructure Cost Monitoring System
 
-A full-stack web application for monitoring and optimizing cloud infrastructure costs across AWS, Azure, and GCP.
+A modern, full-stack web application for monitoring and optimizing cloud infrastructure costs across AWS, Azure, and GCP with a premium dark-themed UI.
 
 ![CloudCost Dashboard](https://img.shields.io/badge/Status-Active-success)
 ![License](https://img.shields.io/badge/License-MIT-blue)
@@ -10,46 +10,57 @@ A full-stack web application for monitoring and optimizing cloud infrastructure 
 ## 🎯 Features
 
 ### Core Features
-- 📊 **Real-time Cost Tracking** - Monitor costs across multiple cloud providers
-- 💰 **Budget Management** - Set budgets and receive alerts
-- 📈 **Cost Analytics** - Visualize spending trends with interactive charts
-- 🔔 **Smart Alerts** - Get notified when spending exceeds thresholds
-- 💡 **Cost Optimization** - AI-powered recommendations to reduce costs
-- 📄 **Export Reports** - Download cost data as CSV files
+- 📊 **Real-time Cost Tracking** - Monitor costs across multiple cloud providers (AWS, Azure, GCP)
+- 💰 **Budget Management** - Set monthly budgets and track spending
+- 📈 **Advanced Analytics** - Interactive charts with daily, monthly, and cumulative cost trends
+- 🔔 **Service-Specific Alerts** - Get notified when specific services exceed thresholds
+- 💡 **Smart Recommendations** - AI-powered cost optimization suggestions based on actual usage
+- 📄 **CSV Export** - Download cost and billing data
+- 🎨 **Premium Dark UI** - Modern glassmorphism design with orange accents
 
 ### Multi-User Support
-- 🔐 **Secure Authentication** - JWT-based user authentication
-- 👥 **User Isolation** - Each user has their own data
-- 🔑 **Role-based Access** - Secure access control
-- 📱 **User Profiles** - Customizable user settings
+- 🔐 **Secure Authentication** - JWT-based user authentication with bcrypt password hashing
+- 👥 **User Isolation** - Complete data separation between users
+- 🔑 **Protected Routes** - Secure access control for all pages
+- 📱 **User Profiles** - Individual user settings and preferences
+
+### Service Management
+- ➕ **Add Services** - Track custom cloud services
+- ✏️ **Edit Services** - Update service details and costs
+- 🗑️ **Remove Services** - Delete services from tracking
+- 🔄 **Toggle Status** - Enable/disable service tracking
+- 📊 **Cost Analysis** - View percentage of total budget per service
 
 ### AWS Integration
-- 📦 **S3 Export** - Export reports to Amazon S3
-- 📊 **CloudWatch Monitoring** - Track resource utilization
-- 🔍 **Resource Analysis** - Identify idle/underutilized resources
+- 📦 **S3 Export** - Export cost reports to Amazon S3
+- 📊 **CloudWatch Monitoring** - Track EC2, RDS, Lambda, and S3 metrics
+- 🔍 **Resource Analysis** - Identify idle and underutilized resources
 
 ## 🚀 Tech Stack
 
 ### Frontend
-- **React 18** - UI framework
-- **Vite** - Build tool
-- **TailwindCSS** - Styling
-- **Recharts** - Data visualization
-- **React Router** - Navigation
+- **React 18** - Modern UI framework with hooks
+- **Vite** - Lightning-fast build tool
+- **TailwindCSS** - Utility-first CSS framework
+- **Recharts** - Beautiful data visualization
+- **React Router v6** - Client-side routing
 - **Axios** - HTTP client
+- **React Hot Toast** - Elegant notifications
 
 ### Backend
-- **Node.js** - Runtime
-- **Express** - Web framework
-- **MongoDB** - Database
-- **Mongoose** - ODM
-- **JWT** - Authentication
+- **Node.js** - JavaScript runtime
+- **Express** - Minimal web framework
+- **MongoDB** - NoSQL database
+- **Mongoose** - Elegant MongoDB ODM
+- **JWT** - Secure authentication
 - **bcrypt** - Password hashing
+- **AWS SDK** - S3 and CloudWatch integration
 
-### AWS Services
-- **S3** - File storage
-- **CloudWatch** - Monitoring
-- **EC2** - Hosting (optional)
+### Design
+- **Dark Mode Only** - Premium dark theme
+- **Glassmorphism** - Modern UI effects
+- **Smooth Animations** - Page transitions and interactions
+- **Responsive Design** - Mobile and desktop optimized
 
 ## 📋 Prerequisites
 
@@ -63,8 +74,8 @@ A full-stack web application for monitoring and optimizing cloud infrastructure 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/cloudcost.git
-cd cloudcost
+git clone https://github.com/VaidikRokad123/cloud.git
+cd cloud
 ```
 
 ### 2. Setup Backend
@@ -84,14 +95,14 @@ nano .env
 ```env
 PORT=5000
 MONGO_URI=mongodb://localhost:27017/cloudcost
-JWT_SECRET=your_secure_secret_key_here
+JWT_SECRET=your_secure_secret_key_here_min_32_chars
 JWT_EXPIRE=7d
 
 # Optional: AWS Configuration
 AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=your_key
-AWS_SECRET_ACCESS_KEY=your_secret
-S3_BUCKET_NAME=your-bucket
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+S3_BUCKET_NAME=your-cloudcost-bucket
 ```
 
 ### 3. Setup Frontend
@@ -99,36 +110,42 @@ S3_BUCKET_NAME=your-bucket
 ```bash
 cd ../client
 npm install
-
-# Copy environment template (optional)
-cp .env.example .env.local
 ```
 
-### 4. Seed Database (Optional)
+### 4. Seed Database with Test Data
 
 ```bash
 cd ../server
 node seed.js
 ```
 
-This creates 5 test users with sample data:
-- vaidik@cloudcost.com / 123456
-- ruksh@cloudcost.com / 123456
-- rudra@cloudcost.com / 123456
-- rishi@cloudcost.com / 123456
-- ridham@cloudcost.com / 123456
+This creates 5 test users with 90 days of cost data, billing history, and alerts:
+- **vaidik@cloudcost.com** / 123456 (TechCorp Inc - $15,000 budget)
+- **ruksh@cloudcost.com** / 123456 (DataFlow Systems - $12,000 budget)
+- **rudra@cloudcost.com** / 123456 (CloudScale Ltd - $18,000 budget)
+- **rishi@cloudcost.com** / 123456 (DevOps Solutions - $10,000 budget)
+- **ridham@cloudcost.com** / 123456 (InfraHub Co - $20,000 budget)
 
 ## 🚀 Running the Application
 
 ### Development Mode
 
-**Terminal 1 - Backend:**
+**Terminal 1 - Start MongoDB:**
+```bash
+# Windows
+mongod
+
+# macOS/Linux
+sudo systemctl start mongod
+```
+
+**Terminal 2 - Backend:**
 ```bash
 cd server
 npm start
 ```
 
-**Terminal 2 - Frontend:**
+**Terminal 3 - Frontend:**
 ```bash
 cd client
 npm run dev
@@ -149,50 +166,96 @@ npm run build
 **Start Backend:**
 ```bash
 cd server
-npm start
+NODE_ENV=production npm start
 ```
 
 ## 📁 Project Structure
 
 ```
 cloudcost/
-├── client/                 # React frontend
+├── client/                    # React frontend
 │   ├── src/
-│   │   ├── components/    # Reusable components
-│   │   ├── pages/         # Page components
-│   │   ├── context/       # React context
-│   │   ├── services/      # API services
-│   │   └── main.jsx       # Entry point
-│   ├── public/            # Static assets
+│   │   ├── components/       # Reusable components
+│   │   │   ├── Layout.jsx    # Main layout wrapper
+│   │   │   ├── Navbar.jsx    # Top navigation bar
+│   │   │   ├── Sidebar.jsx   # Left navigation panel
+│   │   │   ├── PageTransition.jsx  # Page animations
+│   │   │   └── ProtectedRoute.jsx  # Auth guard
+│   │   ├── pages/            # Page components
+│   │   │   ├── Dashboard.jsx # Main dashboard
+│   │   │   ├── Services.jsx  # Service management
+│   │   │   ├── Budget.jsx    # Budget & alerts
+│   │   │   ├── Recommendations.jsx
+│   │   │   ├── Reports.jsx
+│   │   │   ├── Login.jsx
+│   │   │   └── Signup.jsx
+│   │   ├── context/          # React context
+│   │   │   ├── AuthContext.jsx
+│   │   │   ├── AppContext.jsx
+│   │   │   └── ThemeContext.jsx
+│   │   ├── services/         # API services
+│   │   │   └── api.js
+│   │   └── main.jsx          # Entry point
+│   ├── public/               # Static assets
 │   └── package.json
 │
-├── server/                # Node.js backend
-│   ├── controllers/       # Route controllers
-│   ├── models/           # MongoDB models
-│   ├── routes/           # API routes
-│   ├── middleware/       # Custom middleware
-│   ├── services/         # Business logic
-│   ├── utils/            # Utility functions
-│   ├── server.js         # Entry point
+├── server/                   # Node.js backend
+│   ├── controllers/          # Route controllers
+│   │   ├── auth.controller.js
+│   │   ├── cost.controller.js
+│   │   ├── alert.controller.js
+│   │   ├── export.controller.js
+│   │   └── monitoring.controller.js
+│   ├── models/              # MongoDB models
+│   │   ├── User.js
+│   │   ├── CostRecord.js
+│   │   ├── Alert.js
+│   │   └── BillingRecord.js
+│   ├── routes/              # API routes
+│   ├── middleware/          # Custom middleware
+│   │   └── auth.js
+│   ├── services/            # AWS services
+│   │   ├── s3Service.js
+│   │   └── cloudwatchService.js
+│   ├── utils/               # Utility functions
+│   ├── seed.js              # Database seeder
+│   ├── server.js            # Entry point
 │   └── package.json
 │
 └── README.md
 ```
 
+## 🎨 UI Features
+
+### Premium Dark Theme
+- **Glassmorphism Effects** - Translucent cards with backdrop blur
+- **Orange Gradient Accents** - Modern color scheme (#f59e0b to #d97706)
+- **Smooth Animations** - 300ms transitions throughout
+- **Page Transitions** - Fade and slide effects between pages
+- **Responsive Design** - Works on mobile, tablet, and desktop
+
+### Dashboard Charts
+- **Daily Cost Trend** - 30-day area chart
+- **Cost by Service** - Interactive donut chart
+- **Cost by Type** - Bar chart (Compute, Storage, Database, Network)
+- **Cumulative Spend** - Running total area chart
+- **Monthly Comparison** - 6-month bar chart
+- **Service Radar** - Distribution radar chart
+
 ## 🔐 Environment Variables
 
 ### Server (.env)
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `PORT` | Server port | Yes |
-| `MONGO_URI` | MongoDB connection string | Yes |
-| `JWT_SECRET` | JWT signing secret | Yes |
-| `JWT_EXPIRE` | JWT expiration time | Yes |
-| `AWS_REGION` | AWS region | No |
-| `AWS_ACCESS_KEY_ID` | AWS access key | No |
-| `AWS_SECRET_ACCESS_KEY` | AWS secret key | No |
-| `S3_BUCKET_NAME` | S3 bucket name | No |
+| Variable | Description | Required | Example |
+|----------|-------------|----------|---------|
+| `PORT` | Server port | Yes | 5000 |
+| `MONGO_URI` | MongoDB connection string | Yes | mongodb://localhost:27017/cloudcost |
+| `JWT_SECRET` | JWT signing secret (min 32 chars) | Yes | your_super_secret_key_here_32chars |
+| `JWT_EXPIRE` | JWT expiration time | Yes | 7d |
+| `AWS_REGION` | AWS region | No | us-east-1 |
+| `AWS_ACCESS_KEY_ID` | AWS access key | No | AKIAIOSFODNN7EXAMPLE |
+| `AWS_SECRET_ACCESS_KEY` | AWS secret key | No | wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY |
+| `S3_BUCKET_NAME` | S3 bucket name | No | my-cloudcost-bucket |
 
 ## 📚 API Documentation
 
@@ -202,68 +265,73 @@ cloudcost/
 - `GET /api/auth/me` - Get current user
 
 ### Costs
-- `GET /api/costs/summary` - Get cost summary
-- `GET /api/costs/services` - Get services breakdown
-- `GET /api/costs/daily` - Get daily costs
-- `GET /api/costs/monthly` - Get monthly costs
+- `GET /api/costs/summary` - Get cost summary (total, budget, % used)
+- `GET /api/costs/services` - Get services breakdown with percentages
+- `GET /api/costs/daily` - Get daily costs (last 30 days)
+- `GET /api/costs/monthly` - Get monthly costs (last 6 months)
+- `POST /api/costs/services` - Add new service
+- `PUT /api/costs/services/:id` - Update service
+- `DELETE /api/costs/services/:id` - Remove service
+
+### Budget
+- `GET /api/budget` - Get budget settings
+- `PUT /api/budget` - Update budget settings
+
+### Recommendations
+- `GET /api/recommendations` - Get cost optimization recommendations
 
 ### Export
-- `POST /api/export/costs` - Export cost data to S3
+- `POST /api/export/costs` - Export cost data to CSV/S3
 - `POST /api/export/billing` - Export billing data
 - `GET /api/export/date-range` - Get available date range
 
 ### Monitoring (AWS CloudWatch)
-- `GET /api/monitoring/ec2/:instanceId` - Get EC2 metrics
-- `GET /api/monitoring/rds/:dbInstanceId` - Get RDS metrics
+- `GET /api/monitoring/ec2/:instanceId` - Get EC2 CPU metrics
+- `GET /api/monitoring/rds/:dbInstanceId` - Get RDS connections
 - `POST /api/monitoring/utilization` - Get resource utilization
-
-## 🎨 Screenshots
-
-### Dashboard
-![Dashboard](https://via.placeholder.com/800x400?text=Dashboard+Screenshot)
-
-### Cost Analytics
-![Analytics](https://via.placeholder.com/800x400?text=Analytics+Screenshot)
-
-### Recommendations
-![Recommendations](https://via.placeholder.com/800x400?text=Recommendations+Screenshot)
 
 ## 🧪 Testing
 
 ### Test User Accounts
 
-After running the seed script, use these accounts:
-
-| Email | Password | Company | Budget |
-|-------|----------|---------|--------|
-| vaidik@cloudcost.com | 123456 | TechCorp Inc | $15,000 |
-| ruksh@cloudcost.com | 123456 | DataFlow Systems | $12,000 |
-| rudra@cloudcost.com | 123456 | CloudScale Ltd | $18,000 |
-| rishi@cloudcost.com | 123456 | DevOps Solutions | $10,000 |
-| ridham@cloudcost.com | 123456 | InfraHub Co | $20,000 |
+| Email | Password | Company | Budget | Services |
+|-------|----------|---------|--------|----------|
+| vaidik@cloudcost.com | 123456 | TechCorp Inc | $15,000 | EC2, S3, RDS |
+| ruksh@cloudcost.com | 123456 | DataFlow Systems | $12,000 | Lambda, DynamoDB |
+| rudra@cloudcost.com | 123456 | CloudScale Ltd | $18,000 | ECS, CloudFront |
+| rishi@cloudcost.com | 123456 | DevOps Solutions | $10,000 | EKS, ElastiCache |
+| ridham@cloudcost.com | 123456 | InfraHub Co | $20,000 | Redshift, Kinesis |
 
 ## 🚀 Deployment
 
 ### Deploy to AWS EC2
 
-See [AWS_SETUP_FOR_BEGINNERS.md](./AWS_SETUP_FOR_BEGINNERS.md) for detailed instructions.
+1. Launch EC2 instance (t3.micro or larger)
+2. Install Node.js and MongoDB
+3. Clone repository
+4. Configure environment variables
+5. Build frontend: `cd client && npm run build`
+6. Start backend: `cd server && npm start`
+7. Configure Nginx as reverse proxy
+8. Setup SSL with Let's Encrypt
 
 ### Deploy to Render
 
+**Backend:**
 1. Push code to GitHub
 2. Go to [render.com](https://render.com)
 3. Create new Web Service
 4. Connect GitHub repository
-5. Configure environment variables
-6. Deploy!
+5. Set build command: `cd server && npm install`
+6. Set start command: `cd server && npm start`
+7. Add environment variables
+8. Deploy!
 
-### Deploy to Vercel (Frontend only)
-
-```bash
-cd client
-npm install -g vercel
-vercel
-```
+**Frontend:**
+1. Create new Static Site
+2. Set build command: `cd client && npm run build`
+3. Set publish directory: `client/dist`
+4. Deploy!
 
 ## 🤝 Contributing
 
@@ -277,29 +345,29 @@ Contributions are welcome! Please follow these steps:
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ## 👥 Authors
 
-- **Vaidik Rokad** - Initial work
+- **Vaidik Rokad** - [GitHub](https://github.com/VaidikRokad123)
 
 ## 🙏 Acknowledgments
 
 - AWS SDK for JavaScript
 - MongoDB team
 - React community
+- TailwindCSS team
+- Recharts library
 - All contributors
 
 ## 📞 Support
 
-For support, email vaidik@example.com or open an issue on GitHub.
+For support, open an issue on GitHub.
 
 ## 🔗 Links
 
-- [Documentation](./docs)
-- [AWS Integration Guide](./AWS_INTEGRATION_GUIDE.md)
-- [API Documentation](./API.md)
-- [Deployment Guide](./DEPLOYMENT.md)
+- [GitHub Repository](https://github.com/VaidikRokad123/cloud)
+- [Live Demo](#) (Coming soon)
 
 ---
 

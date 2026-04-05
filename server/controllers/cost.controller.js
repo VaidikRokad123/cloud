@@ -42,23 +42,55 @@ exports.getServices = async (req, res) => {
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
-    const services = await CostRecord.aggregate([
-      { $match: { user: req.userId, date: { $gte: startOfMonth } } },
-      {
-        $group: {
-          _id: { service: '$service', type: '$resourceType' },
-          cost: { $sum: '$cost' }
-        }
-      },
-      { $sort: { cost: -1 } }
-    ]);
+    // Get all cost records for current month
+    const costRecords = await CostRecord.find({
+      user: req.userId,
+      date: { $gte: startOfMonth }
+    });
 
-    const result = services.map(s => ({
-      name: s._id.service,
-      type: s._id.type,
-      cost: Math.round(s.cost * 100) / 100,
-      status: 'active'
+    // Map to capitalize type for frontend
+    const capitalizeType = (type) => {
+      const typeMap = {
+        'compute': 'Compute',
+        'storage': 'Storage',
+        'database': 'Database',
+        'network': 'Network',
+        'other': 'Other'
+      };
+      return typeMap[type] || 'Other';
+    };
+
+    // Group by service name
+    const serviceMap = {};
+    let totalCost = 0;
+
+    costRecords.forEach(record => {
+      const key = `${record.service}-${record.resourceType}`;
+      if (!serviceMap[key]) {
+        serviceMap[key] = {
+          id: record._id.toString(),
+          name: record.service,
+          type: capitalizeType(record.resourceType),
+          cost: 0,
+          usage: `${record.usageAmount || 0} ${record.usageUnit || 'units'}`,
+          limit: 'No limit',
+          status: 'active',
+          percentOfTotal: 0
+        };
+      }
+      serviceMap[key].cost += record.cost;
+      totalCost += record.cost;
+    });
+
+    // Calculate percentages
+    const result = Object.values(serviceMap).map(service => ({
+      ...service,
+      cost: Math.round(service.cost * 100) / 100,
+      percentOfTotal: totalCost > 0 ? Math.round((service.cost / totalCost) * 100) : 0
     }));
+
+    // Sort by cost descending
+    result.sort((a, b) => b.cost - a.cost);
 
     res.json(result);
   } catch (error) {
@@ -370,5 +402,129 @@ exports.getResources = async (req, res) => {
   } catch (error) {
     console.error('Resources error:', error);
     res.status(500).json({ message: 'Error fetching resources' });
+  }
+};
+
+/**
+ * Add a new service (creates cost records)
+ * POST /api/costs/services
+ */
+exports.addService = async (req, res) => {
+  try {
+    const { name, type, cost, usage, limit } = req.body;
+
+    if (!name || !type) {
+      return res.status(400).json({ message: 'Name and type are required' });
+    }
+
+    // Map frontend type to backend enum (lowercase)
+    const resourceTypeMap = {
+      'Compute': 'compute',
+      'Storage': 'storage',
+      'Database': 'database',
+      'Network': 'network'
+    };
+
+    const resourceType = resourceTypeMap[type] || 'other';
+
+    // Create a cost record for this service for the current month
+    const now = new Date();
+    const costRecord = new CostRecord({
+      user: req.userId,
+      date: now,
+      provider: 'AWS', // Default to AWS for custom services
+      service: name,
+      resourceType: resourceType,
+      cost: parseFloat(cost) || 0,
+      usageHours: 24,
+      usageAmount: parseFloat(usage) || 0,
+      usageUnit: 'units'
+    });
+
+    await costRecord.save();
+
+    res.status(201).json({
+      message: 'Service added successfully',
+      service: {
+        id: costRecord._id,
+        name,
+        type,
+        cost: parseFloat(cost) || 0,
+        usage,
+        limit,
+        status: 'active'
+      }
+    });
+  } catch (error) {
+    console.error('Add service error:', error);
+    res.status(500).json({ message: 'Error adding service' });
+  }
+};
+
+/**
+ * Update a service
+ * PUT /api/costs/services/:id
+ */
+exports.updateService = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, type, cost, usage, limit, status } = req.body;
+
+    const costRecord = await CostRecord.findOne({ _id: id, user: req.userId });
+
+    if (!costRecord) {
+      return res.status(404).json({ message: 'Service not found' });
+    }
+
+    // Map frontend type to backend enum (lowercase)
+    const resourceTypeMap = {
+      'Compute': 'compute',
+      'Storage': 'storage',
+      'Database': 'database',
+      'Network': 'network'
+    };
+
+    // Update the cost record
+    if (name) costRecord.service = name;
+    if (type) costRecord.resourceType = resourceTypeMap[type] || 'other';
+    if (cost !== undefined) costRecord.cost = parseFloat(cost);
+    if (usage !== undefined) costRecord.usageAmount = parseFloat(usage);
+
+    await costRecord.save();
+
+    res.json({
+      message: 'Service updated successfully',
+      service: {
+        id: costRecord._id,
+        name: costRecord.service,
+        type: costRecord.resourceType,
+        cost: costRecord.cost,
+        status: status || 'active'
+      }
+    });
+  } catch (error) {
+    console.error('Update service error:', error);
+    res.status(500).json({ message: 'Error updating service' });
+  }
+};
+
+/**
+ * Remove a service
+ * DELETE /api/costs/services/:id
+ */
+exports.removeService = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const result = await CostRecord.deleteOne({ _id: id, user: req.userId });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Service not found' });
+    }
+
+    res.json({ message: 'Service removed successfully' });
+  } catch (error) {
+    console.error('Remove service error:', error);
+    res.status(500).json({ message: 'Error removing service' });
   }
 };

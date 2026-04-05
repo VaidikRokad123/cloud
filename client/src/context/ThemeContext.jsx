@@ -1,23 +1,19 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useEffect } from 'react';
 
 const ThemeContext = createContext(null);
 
 export function ThemeProvider({ children }) {
-  const [dark, setDark] = useState(() => {
-    const saved = localStorage.getItem('cloudcost_theme');
-    return saved ? saved === 'dark' : false;
-  });
+  // Always dark mode
+  const dark = true;
 
   useEffect(() => {
-    if (dark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('cloudcost_theme', dark ? 'dark' : 'light');
-  }, [dark]);
+    // Force dark mode
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('cloudcost_theme', 'dark');
+  }, []);
 
-  const toggleTheme = () => setDark(prev => !prev);
+  // No-op function since we're always in dark mode
+  const toggleTheme = () => {};
 
   return (
     <ThemeContext.Provider value={{ dark, toggleTheme }}>
