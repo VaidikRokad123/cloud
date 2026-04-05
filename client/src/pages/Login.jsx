@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { HiOutlineCloud, HiOutlineMail, HiOutlineLockClosed } from 'react-icons/hi';
+import { HiOutlineCloud, HiOutlineMail, HiOutlineLockClosed, HiOutlineShieldCheck, HiOutlineChartBar, HiOutlineLightningBolt } from 'react-icons/hi';
 import toast from 'react-hot-toast';
 
 export default function Login() {
@@ -31,73 +31,119 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-primary-950 flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
-        {/* Logo */}
-        <div className="flex items-center justify-center gap-2.5 mb-8">
-          <div className="w-10 h-10 rounded-xl bg-primary-600 flex items-center justify-center">
-            <HiOutlineCloud className="w-6 h-6 text-white" />
+    <div className="min-h-screen bg-[#0B0F19] flex">
+      {/* LEFT SIDE - Branding */}
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0B0F19] via-[#111827] to-[#1F2937]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(245,158,11,0.1),transparent_50%)]" />
+        
+        <div className="relative z-10 flex flex-col justify-center px-16 w-full">
+          {/* Logo */}
+          <div className="flex items-center gap-3 mb-12">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#f59e0b] to-[#d97706] flex items-center justify-center shadow-glow">
+              <HiOutlineCloud className="w-7 h-7 text-white" />
+            </div>
+            <span className="font-bold text-3xl text-white tracking-tight">CloudCost</span>
           </div>
-          <span className="font-bold text-2xl text-white tracking-tight">CloudCost</span>
-        </div>
 
-        {/* Card */}
-        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-8">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Welcome back</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Sign in to your account to continue</p>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Email */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                Email address
-              </label>
-              <div className="relative">
-                <HiOutlineMail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="email"
-                  required
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  placeholder="you@company.com"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
-                />
-              </div>
-            </div>
-
-            {/* Password */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-                Password
-              </label>
-              <div className="relative">
-                <HiOutlineLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="password"
-                  required
-                  value={form.password}
-                  onChange={(e) => setForm({ ...form, password: e.target.value })}
-                  placeholder="••••••••"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
-                />
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-primary-600 hover:bg-primary-700 disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg transition-colors text-sm"
-            >
-              {loading ? 'Signing in…' : 'Sign In'}
-            </button>
-          </form>
-
-          <p className="mt-5 text-center text-sm text-gray-500 dark:text-gray-400">
-            Don't have an account?{' '}
-            <Link to="/signup" className="text-primary-600 hover:text-primary-500 font-medium">
-              Create one
-            </Link>
+          {/* Heading */}
+          <h1 className="text-4xl font-bold text-white mb-4 leading-tight">
+            Monitor your cloud costs<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f59e0b] to-[#fbbf24]">
+              intelligently
+            </span>
+          </h1>
+          <p className="text-gray-400 text-lg mb-12 max-w-md">
+            Real-time insights, cost optimization, and budget tracking for your cloud infrastructure.
           </p>
+
+          {/* Features */}
+          <div className="space-y-4">
+            {[
+              { icon: HiOutlineChartBar, text: 'Real-time cost analytics' },
+              { icon: HiOutlineShieldCheck, text: 'Budget alerts & monitoring' },
+              { icon: HiOutlineLightningBolt, text: 'AI-powered recommendations' },
+            ].map((feature, i) => (
+              <div key={i} className="flex items-center gap-3 text-gray-300">
+                <div className="w-8 h-8 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center">
+                  <feature.icon className="w-4 h-4 text-[#f59e0b]" />
+                </div>
+                <span className="text-sm">{feature.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* RIGHT SIDE - Login Form */}
+      <div className="flex-1 flex items-center justify-center px-6 lg:px-16">
+        <div className="w-full max-w-md">
+          {/* Mobile Logo */}
+          <div className="lg:hidden flex items-center justify-center gap-2.5 mb-8">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#f59e0b] to-[#d97706] flex items-center justify-center shadow-glow">
+              <HiOutlineCloud className="w-6 h-6 text-white" />
+            </div>
+            <span className="font-bold text-2xl text-white tracking-tight">CloudCost</span>
+          </div>
+
+          {/* Card */}
+          <div className="bg-[#111827]/60 backdrop-blur-xl rounded-2xl border border-[#1F2937] shadow-2xl p-8">
+            <h2 className="text-2xl font-bold text-white mb-2">Welcome back</h2>
+            <p className="text-sm text-gray-400 mb-8">Sign in to your account to continue</p>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Email */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Email address
+                </label>
+                <div className="relative">
+                  <HiOutlineMail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+                  <input
+                    type="email"
+                    required
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    placeholder="you@company.com"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-[#1F2937] bg-[#0B0F19]/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent text-sm transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* Password */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Password
+                </label>
+                <div className="relative">
+                  <HiOutlineLockClosed className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+                  <input
+                    type="password"
+                    required
+                    value={form.password}
+                    onChange={(e) => setForm({ ...form, password: e.target.value })}
+                    placeholder="••••••••"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-[#1F2937] bg-[#0B0F19]/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent text-sm transition-all"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-gradient-to-r from-[#f59e0b] to-[#d97706] hover:from-[#d97706] hover:to-[#b45309] disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition-all duration-200 text-sm shadow-glow hover:shadow-glow-lg transform hover:scale-[1.02] active:scale-100"
+              >
+                {loading ? 'Signing in…' : 'Sign In'}
+              </button>
+            </form>
+
+            <p className="mt-6 text-center text-sm text-gray-400">
+              Don't have an account?{' '}
+              <Link to="/signup" className="text-[#f59e0b] hover:text-[#fbbf24] font-medium transition-colors">
+                Create one
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

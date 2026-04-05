@@ -146,17 +146,17 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard title="Total Cost (This Month)" value={rawConvert(summary?.totalCost || 0)}
           displayValue={(v) => `${currencySymbol}${v.toLocaleString()}`}
-          icon={HiOutlineCurrencyDollar} color="bg-[#1a73e8]" delay={1} />
+          icon={HiOutlineCurrencyDollar} color="bg-gradient-to-br from-[#f59e0b] to-[#d97706]" delay={1} />
         <StatCard title="Budget" value={rawConvert(summary?.budget || 0)}
           displayValue={(v) => `${currencySymbol}${v.toLocaleString()}`}
-          icon={HiOutlineChartPie} color="bg-emerald-500" delay={2} />
+          icon={HiOutlineChartPie} color="bg-gradient-to-br from-emerald-500 to-emerald-600" delay={2} />
         <StatCard title="Budget Used" value={Math.round(budgetPercent)}
           displayValue={(v) => `${v}%`}
           icon={HiOutlineTrendingUp}
-          color={budgetPercent > 80 ? 'bg-red-500' : budgetPercent > 60 ? 'bg-amber-500' : 'bg-emerald-500'} delay={3} />
+          color={budgetPercent > 80 ? 'bg-gradient-to-br from-red-500 to-red-600' : budgetPercent > 60 ? 'bg-gradient-to-br from-amber-500 to-amber-600' : 'bg-gradient-to-br from-emerald-500 to-emerald-600'} delay={3} />
         <StatCard title="Forecasted (EOM)" value={rawConvert(Math.round(forecastedTotal))}
           displayValue={(v) => `${currencySymbol}${v.toLocaleString()}`}
-          icon={HiOutlineCalendar} color="bg-violet-500" delay={4} />
+          icon={HiOutlineCalendar} color="bg-gradient-to-br from-violet-500 to-violet-600" delay={4} />
       </div>
 
       {/* Budget Progress Bar */}
