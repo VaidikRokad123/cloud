@@ -13,6 +13,8 @@ import Budget from './pages/Budget';
 import Reports from './pages/Reports';
 import Recommendations from './pages/Recommendations';
 import Settings from './pages/Settings';
+import CloudAccounts from './pages/CloudAccounts';
+import MultiCloudComparison from './pages/MultiCloudComparison';
 import ProtectedRoute from './components/ProtectedRoute';
 
 export default function App() {
@@ -45,6 +47,8 @@ export default function App() {
                 <Route path="/budget" element={<Budget />} />
                 <Route path="/reports" element={<Reports />} />
                 <Route path="/recommendations" element={<Recommendations />} />
+                <Route path="/cloud-accounts" element={<CloudAccounts />} />
+                <Route path="/multi-cloud" element={<MultiCloudComparison />} />
                 <Route path="/settings" element={<Settings />} />
               </Route>
 

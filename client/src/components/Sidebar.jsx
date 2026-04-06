@@ -7,6 +7,8 @@ import {
   HiOutlineLightningBolt,
   HiOutlineCog,
   HiOutlineX,
+  HiOutlineCloud,
+  HiOutlineChartBar,
 } from 'react-icons/hi';
 
 const navItems = [
@@ -15,6 +17,14 @@ const navItems = [
   { to: '/budget', icon: HiOutlineCreditCard, label: 'Budget & Alerts' },
   { to: '/reports', icon: HiOutlineDocumentReport, label: 'Reports' },
   { to: '/recommendations', icon: HiOutlineLightningBolt, label: 'Recommendations' },
+];
+
+const multiCloudItems = [
+  { to: '/cloud-accounts', icon: HiOutlineCloud, label: 'Cloud Accounts' },
+  { to: '/multi-cloud', icon: HiOutlineChartBar, label: 'Multi-Cloud Compare' },
+];
+
+const settingsItems = [
   { to: '/settings', icon: HiOutlineCog, label: 'Settings' },
 ];
 
@@ -54,7 +64,7 @@ export default function Sidebar({ open, onClose }) {
 
         {/* Nav */}
         <nav className="flex-1 overflow-y-auto px-3 py-5 space-y-1">
-          <p className="text-[10px] font-semibold text-gray-500 dark:text-slate-500 uppercase tracking-widest px-3 mb-3 transition-colors duration-300">Navigation</p>
+          <p className="text-[10px] font-semibold text-gray-500 dark:text-slate-500 uppercase tracking-widest px-3 mb-3 transition-colors duration-300">Main</p>
           {navItems.map(({ to, icon: Icon, label }, idx) => {
             const isActive = location.pathname === to || (to === '/dashboard' && location.pathname === '/');
             return (
@@ -63,6 +73,60 @@ export default function Sidebar({ open, onClose }) {
                 to={to}
                 onClick={onClose}
                 className={`slide-right stagger-${idx + 1} flex items-center gap-3 px-3 py-[10px] rounded-xl text-[13px] font-medium transition-all duration-300 group ${
+                  isActive
+                    ? 'bg-gradient-to-r from-[#f59e0b]/20 to-[#d97706]/20 text-gray-900 dark:text-white shadow-sm border border-[#f59e0b]/30'
+                    : 'text-gray-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-white/[.06] hover:text-gray-900 dark:hover:text-slate-200'
+                }`}
+              >
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                  isActive ? 'bg-[#f59e0b]/20 text-[#f59e0b]' : 'text-gray-500 dark:text-slate-500 group-hover:text-gray-700 dark:group-hover:text-slate-300'
+                }`}>
+                  <Icon className="w-[18px] h-[18px]" />
+                </div>
+                {label}
+                {isActive && (
+                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-[#f59e0b] animate-pulse" />
+                )}
+              </NavLink>
+            );
+          })}
+
+          <p className="text-[10px] font-semibold text-gray-500 dark:text-slate-500 uppercase tracking-widest px-3 mb-3 mt-6 transition-colors duration-300">Multi-Cloud</p>
+          {multiCloudItems.map(({ to, icon: Icon, label }, idx) => {
+            const isActive = location.pathname === to;
+            return (
+              <NavLink
+                key={to}
+                to={to}
+                onClick={onClose}
+                className={`slide-right stagger-${idx + 6} flex items-center gap-3 px-3 py-[10px] rounded-xl text-[13px] font-medium transition-all duration-300 group ${
+                  isActive
+                    ? 'bg-gradient-to-r from-[#f59e0b]/20 to-[#d97706]/20 text-gray-900 dark:text-white shadow-sm border border-[#f59e0b]/30'
+                    : 'text-gray-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-white/[.06] hover:text-gray-900 dark:hover:text-slate-200'
+                }`}
+              >
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                  isActive ? 'bg-[#f59e0b]/20 text-[#f59e0b]' : 'text-gray-500 dark:text-slate-500 group-hover:text-gray-700 dark:group-hover:text-slate-300'
+                }`}>
+                  <Icon className="w-[18px] h-[18px]" />
+                </div>
+                {label}
+                {isActive && (
+                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-[#f59e0b] animate-pulse" />
+                )}
+              </NavLink>
+            );
+          })}
+
+          <p className="text-[10px] font-semibold text-gray-500 dark:text-slate-500 uppercase tracking-widest px-3 mb-3 mt-6 transition-colors duration-300">System</p>
+          {settingsItems.map(({ to, icon: Icon, label }, idx) => {
+            const isActive = location.pathname === to;
+            return (
+              <NavLink
+                key={to}
+                to={to}
+                onClick={onClose}
+                className={`slide-right stagger-${idx + 8} flex items-center gap-3 px-3 py-[10px] rounded-xl text-[13px] font-medium transition-all duration-300 group ${
                   isActive
                     ? 'bg-gradient-to-r from-[#f59e0b]/20 to-[#d97706]/20 text-gray-900 dark:text-white shadow-sm border border-[#f59e0b]/30'
                     : 'text-gray-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-white/[.06] hover:text-gray-900 dark:hover:text-slate-200'
