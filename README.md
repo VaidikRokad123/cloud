@@ -1,22 +1,39 @@
-# ☁️ CloudCost - Cloud Infrastructure Cost Monitoring System
+# ☁️ CloudCost - Multi-Cloud Infrastructure Cost Monitoring System
 
-A modern, full-stack web application for monitoring and optimizing cloud infrastructure costs across AWS, Azure, and GCP with a premium dark-themed UI.
+A modern, full-stack web application for monitoring and optimizing cloud infrastructure costs across **AWS, Azure, and Google Cloud Platform (GCP)** with a premium dark-themed UI and unified multi-cloud management.
 
 ![CloudCost Dashboard](https://img.shields.io/badge/Status-Active-success)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 ![Node](https://img.shields.io/badge/Node-20.x-green)
 ![React](https://img.shields.io/badge/React-18.x-blue)
+![Multi--Cloud](https://img.shields.io/badge/Multi--Cloud-AWS%20%7C%20Azure%20%7C%20GCP-orange)
 
 ## 🎯 Features
 
+### Multi-Cloud Management 🌐
+- ☁️ **Unified Dashboard** - Monitor AWS, Azure, and GCP costs in one place
+- 🔄 **Cloud Account Management** - Connect and manage multiple cloud provider accounts
+- 📊 **Cross-Cloud Comparison** - Compare costs and usage across providers
+- 📈 **Multi-Cloud Analytics** - Unified reporting and cost analysis
+- 🎯 **Provider-Specific Budgets** - Set individual budgets for each cloud provider
+- 🔔 **Consolidated Alerts** - Get alerts from all cloud providers in one dashboard
+- 📄 **Multi-Cloud Reports** - Comprehensive reports with provider breakdowns
+
 ### Core Features
 - 📊 **Real-time Cost Tracking** - Monitor costs across multiple cloud providers (AWS, Azure, GCP)
-- 💰 **Budget Management** - Set monthly budgets and track spending
+- 💰 **Budget Management** - Set monthly budgets and track spending per provider
 - 📈 **Advanced Analytics** - Interactive charts with daily, monthly, and cumulative cost trends
 - 🔔 **Service-Specific Alerts** - Get notified when specific services exceed thresholds
 - 💡 **Smart Recommendations** - AI-powered cost optimization suggestions based on actual usage
-- 📄 **CSV Export** - Download cost and billing data
+- 📄 **CSV Export to S3** - Download and store cost reports in Amazon S3
 - 🎨 **Premium Dark UI** - Modern glassmorphism design with orange accents
+
+### Multi-Cloud Features
+- **Cloud Accounts** - Add and manage AWS, Azure, and GCP accounts
+- **Multi-Cloud Compare** - Side-by-side cost comparison with visual charts
+- **Usage Metrics** - Track compute hours, storage, network, and API calls across providers
+- **Budget & Alerts** - Provider-specific budgets with threshold alerts
+- **Reports** - Comprehensive multi-cloud cost reports with export functionality
 
 ### Multi-User Support
 - 🔐 **Secure Authentication** - JWT-based user authentication with bcrypt password hashing
@@ -25,16 +42,16 @@ A modern, full-stack web application for monitoring and optimizing cloud infrast
 - 📱 **User Profiles** - Individual user settings and preferences
 
 ### Service Management
-- ➕ **Add Services** - Track custom cloud services
+- ➕ **Add Services** - Track custom cloud services from any provider
 - ✏️ **Edit Services** - Update service details and costs
 - 🗑️ **Remove Services** - Delete services from tracking
 - 🔄 **Toggle Status** - Enable/disable service tracking
 - 📊 **Cost Analysis** - View percentage of total budget per service
 
-### AWS Integration
-- 📦 **S3 Export** - Export cost reports to Amazon S3
-- 📊 **CloudWatch Monitoring** - Track EC2, RDS, Lambda, and S3 metrics
-- 🔍 **Resource Analysis** - Identify idle and underutilized resources
+### Cloud Provider Integration
+- **AWS** - S3 Export, CloudWatch Monitoring, EC2, RDS, Lambda metrics
+- **Azure** - Virtual Machines, Blob Storage, SQL Database, App Service
+- **GCP** - Compute Engine, Cloud Storage, Cloud SQL, Cloud Functions
 
 ## 🚀 Tech Stack
 
@@ -59,14 +76,17 @@ A modern, full-stack web application for monitoring and optimizing cloud infrast
 ### Design
 - **Dark Mode Only** - Premium dark theme
 - **Glassmorphism** - Modern UI effects
-- **Smooth Animations** - Page transitions and interactions
+- **Smooth Animations** - Page transitions and interactions (300ms)
 - **Responsive Design** - Mobile and desktop optimized
+- **Provider Color Coding** - AWS (Orange), Azure (Blue), GCP (Red)
 
 ## 📋 Prerequisites
 
 - Node.js 18+ and npm
 - MongoDB 6+
 - AWS Account (optional, for S3/CloudWatch features)
+- Azure Account (optional, for Azure Cost Management)
+- GCP Account (optional, for GCP Billing API)
 - Git
 
 ## 🛠️ Installation
@@ -93,16 +113,25 @@ nano .env
 
 **Configure `.env`:**
 ```env
-PORT=5000
+PORT=5001
 MONGO_URI=mongodb://localhost:27017/cloudcost
 JWT_SECRET=your_secure_secret_key_here_min_32_chars
 JWT_EXPIRE=7d
 
-# Optional: AWS Configuration
+# AWS Configuration
 AWS_REGION=us-east-1
 AWS_ACCESS_KEY_ID=your_aws_access_key
 AWS_SECRET_ACCESS_KEY=your_aws_secret_key
 S3_BUCKET_NAME=your-cloudcost-bucket
+
+# Azure Configuration (Optional)
+AZURE_TENANT_ID=your-tenant-id
+AZURE_CLIENT_ID=your-client-id
+AZURE_CLIENT_SECRET=your-client-secret
+
+# GCP Configuration (Optional)
+GCP_PROJECT_ID=your-project-id
+GCP_SERVICE_ACCOUNT_KEY=path-to-service-account-key.json
 ```
 
 ### 3. Setup Frontend
@@ -187,6 +216,11 @@ cloudcost/
 │   │   │   ├── Budget.jsx    # Budget & alerts
 │   │   │   ├── Recommendations.jsx
 │   │   │   ├── Reports.jsx
+│   │   │   ├── CloudAccounts.jsx  # Multi-cloud accounts
+│   │   │   ├── MultiCloudComparison.jsx
+│   │   │   ├── MultiCloudUsage.jsx
+│   │   │   ├── MultiCloudBudget.jsx
+│   │   │   ├── MultiCloudReports.jsx
 │   │   │   ├── Login.jsx
 │   │   │   └── Signup.jsx
 │   │   ├── context/          # React context
@@ -203,25 +237,30 @@ cloudcost/
 │   ├── controllers/          # Route controllers
 │   │   ├── auth.controller.js
 │   │   ├── cost.controller.js
+│   │   ├── cloud.controller.js  # Multi-cloud
 │   │   ├── alert.controller.js
 │   │   ├── export.controller.js
 │   │   └── monitoring.controller.js
 │   ├── models/              # MongoDB models
 │   │   ├── User.js
 │   │   ├── CostRecord.js
+│   │   ├── CloudAccount.js  # Multi-cloud accounts
 │   │   ├── Alert.js
 │   │   └── BillingRecord.js
 │   ├── routes/              # API routes
 │   ├── middleware/          # Custom middleware
 │   │   └── auth.js
-│   ├── services/            # AWS services
-│   │   ├── s3Service.js
-│   │   └── cloudwatchService.js
+│   ├── services/            # Cloud services
+│   │   ├── s3Service.js     # AWS S3
+│   │   ├── cloudwatchService.js  # AWS CloudWatch
+│   │   ├── azureService.js  # Azure Cost Management
+│   │   └── gcpService.js    # GCP Billing API
 │   ├── utils/               # Utility functions
 │   ├── seed.js              # Database seeder
 │   ├── server.js            # Entry point
 │   └── package.json
 │
+├── MULTI_CLOUD_INTEGRATION.md  # Multi-cloud setup guide
 └── README.md
 ```
 
@@ -235,12 +274,20 @@ cloudcost/
 - **Responsive Design** - Works on mobile, tablet, and desktop
 
 ### Dashboard Charts
-- **Daily Cost Trend** - 30-day area chart
-- **Cost by Service** - Interactive donut chart
+- **Daily Cost Trend** - 30-day area chart with gradient fill
+- **Cost by Service** - Horizontal progress bars with provider colors
+- **Service Distribution** - Interactive donut chart
 - **Cost by Type** - Bar chart (Compute, Storage, Database, Network)
 - **Cumulative Spend** - Running total area chart
-- **Monthly Comparison** - 6-month bar chart
-- **Service Radar** - Distribution radar chart
+- **Monthly Trend** - 6-month line chart
+- **Top 3 Cost Drivers** - Service ranking cards
+
+### Multi-Cloud Pages
+- **Cloud Accounts** - Manage AWS, Azure, GCP accounts with sync functionality
+- **Multi-Cloud Compare** - Side-by-side cost comparison with charts
+- **Usage Metrics** - Compute hours, storage, network, API calls tracking
+- **Budget & Alerts** - Provider-specific budgets with visual progress bars
+- **Reports** - Comprehensive reports with 6-month trends and CSV export
 
 ## 🔐 Environment Variables
 
@@ -248,7 +295,7 @@ cloudcost/
 
 | Variable | Description | Required | Example |
 |----------|-------------|----------|---------|
-| `PORT` | Server port | Yes | 5000 |
+| `PORT` | Server port | Yes | 5001 |
 | `MONGO_URI` | MongoDB connection string | Yes | mongodb://localhost:27017/cloudcost |
 | `JWT_SECRET` | JWT signing secret (min 32 chars) | Yes | your_super_secret_key_here_32chars |
 | `JWT_EXPIRE` | JWT expiration time | Yes | 7d |
@@ -256,6 +303,11 @@ cloudcost/
 | `AWS_ACCESS_KEY_ID` | AWS access key | No | AKIAIOSFODNN7EXAMPLE |
 | `AWS_SECRET_ACCESS_KEY` | AWS secret key | No | wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY |
 | `S3_BUCKET_NAME` | S3 bucket name | No | my-cloudcost-bucket |
+| `AZURE_TENANT_ID` | Azure tenant ID | No | your-tenant-id |
+| `AZURE_CLIENT_ID` | Azure client ID | No | your-client-id |
+| `AZURE_CLIENT_SECRET` | Azure client secret | No | your-client-secret |
+| `GCP_PROJECT_ID` | GCP project ID | No | your-project-id |
+| `GCP_SERVICE_ACCOUNT_KEY` | GCP service account key path | No | /path/to/key.json |
 
 ## 📚 API Documentation
 
@@ -272,6 +324,13 @@ cloudcost/
 - `POST /api/costs/services` - Add new service
 - `PUT /api/costs/services/:id` - Update service
 - `DELETE /api/costs/services/:id` - Remove service
+
+### Multi-Cloud
+- `POST /api/cloud/add` - Add cloud account (AWS/Azure/GCP)
+- `GET /api/cloud/list` - List all connected cloud accounts
+- `DELETE /api/cloud/:id` - Delete cloud account
+- `GET /api/cloud/comparison` - Get multi-cloud cost comparison
+- `POST /api/cloud/sync` - Sync costs from all providers
 
 ### Budget
 - `GET /api/budget` - Get budget settings
@@ -303,6 +362,35 @@ cloudcost/
 | ridham@cloudcost.com | 123456 | InfraHub Co | $20,000 | Redshift, Kinesis |
 
 ## 🚀 Deployment
+
+### Multi-Cloud Setup
+
+**For production use with real cloud providers:**
+
+1. **AWS Integration:**
+   - Create IAM user with Cost Explorer and CloudWatch permissions
+   - Generate access keys
+   - Create S3 bucket for report storage
+   - Add credentials to `.env`
+
+2. **Azure Integration:**
+   ```bash
+   npm install @azure/arm-costmanagement @azure/identity
+   ```
+   - Create Azure App Registration
+   - Grant Cost Management Reader role
+   - Add tenant ID, client ID, and secret to `.env`
+
+3. **GCP Integration:**
+   ```bash
+   npm install @google-cloud/billing
+   ```
+   - Enable Cloud Billing API
+   - Create service account with Billing Account Viewer role
+   - Download JSON key file
+   - Add project ID and key path to `.env`
+
+See `MULTI_CLOUD_INTEGRATION.md` for detailed setup instructions.
 
 ### Deploy to AWS EC2
 
@@ -354,6 +442,8 @@ This project is licensed under the MIT License.
 ## 🙏 Acknowledgments
 
 - AWS SDK for JavaScript
+- Azure SDK for JavaScript
+- Google Cloud SDK
 - MongoDB team
 - React community
 - TailwindCSS team
@@ -362,13 +452,14 @@ This project is licensed under the MIT License.
 
 ## 📞 Support
 
-For support, open an issue on GitHub.
+For support, open an issue on GitHub or check `MULTI_CLOUD_INTEGRATION.md` for setup help.
 
 ## 🔗 Links
 
 - [GitHub Repository](https://github.com/VaidikRokad123/cloud)
+- [Multi-Cloud Setup Guide](./MULTI_CLOUD_INTEGRATION.md)
 - [Live Demo](#) (Coming soon)
 
 ---
 
-Made with ❤️ by Vaidik Rokad
+Made with ❤️ by Vaidik Rokad | Multi-Cloud Cost Optimization Platform

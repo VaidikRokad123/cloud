@@ -22,6 +22,9 @@ const navItems = [
 const multiCloudItems = [
   { to: '/cloud-accounts', icon: HiOutlineCloud, label: 'Cloud Accounts' },
   { to: '/multi-cloud', icon: HiOutlineChartBar, label: 'Multi-Cloud Compare' },
+  { to: '/multi-cloud-usage', icon: HiOutlineServer, label: 'Usage Metrics' },
+  { to: '/multi-cloud-budget', icon: HiOutlineCreditCard, label: 'Budget & Alerts' },
+  { to: '/multi-cloud-reports', icon: HiOutlineDocumentReport, label: 'Reports' },
 ];
 
 const settingsItems = [

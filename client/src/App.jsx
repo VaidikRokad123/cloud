@@ -15,6 +15,9 @@ import Recommendations from './pages/Recommendations';
 import Settings from './pages/Settings';
 import CloudAccounts from './pages/CloudAccounts';
 import MultiCloudComparison from './pages/MultiCloudComparison';
+import MultiCloudUsage from './pages/MultiCloudUsage';
+import MultiCloudBudget from './pages/MultiCloudBudget';
+import MultiCloudReports from './pages/MultiCloudReports';
 import ProtectedRoute from './components/ProtectedRoute';
 
 export default function App() {
@@ -49,6 +52,9 @@ export default function App() {
                 <Route path="/recommendations" element={<Recommendations />} />
                 <Route path="/cloud-accounts" element={<CloudAccounts />} />
                 <Route path="/multi-cloud" element={<MultiCloudComparison />} />
+                <Route path="/multi-cloud-usage" element={<MultiCloudUsage />} />
+                <Route path="/multi-cloud-budget" element={<MultiCloudBudget />} />
+                <Route path="/multi-cloud-reports" element={<MultiCloudReports />} />
                 <Route path="/settings" element={<Settings />} />
               </Route>
 
