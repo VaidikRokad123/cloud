@@ -131,7 +131,7 @@ export default function CloudAccounts() {
           </button>
           <button
             onClick={() => setShowAddModal(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-[#f59e0b] to-[#d97706] text-white text-sm font-medium rounded-lg transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-[#22c55e] to-[#16a34a] text-white text-sm font-medium rounded-lg transition-colors"
           >
             <HiOutlinePlus className="w-4 h-4" />
             Add Account
@@ -148,7 +148,7 @@ export default function CloudAccounts() {
           </p>
           <button
             onClick={() => setShowAddModal(true)}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-[#f59e0b] to-[#d97706] text-white font-medium rounded-lg"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-[#22c55e] to-[#16a34a] text-white font-medium rounded-lg"
           >
             <HiOutlinePlus className="w-5 h-5" />
             Add Your First Account
@@ -210,7 +210,7 @@ export default function CloudAccounts() {
                     <button
                       key={key}
                       onClick={() => setSelectedProvider(key)}
-                      className="w-full flex items-center gap-4 p-4 border-2 border-gray-200 dark:border-dark-border rounded-xl hover:border-[#f59e0b] dark:hover:border-[#f59e0b] transition-colors"
+                      className="w-full flex items-center gap-4 p-4 border-2 border-gray-200 dark:border-dark-border rounded-xl hover:border-[#22c55e] dark:hover:border-[#22c55e] transition-colors"
                     >
                       <div className={`w-12 h-12 rounded-lg ${config.color} flex items-center justify-center text-2xl`}>
                         {config.icon}
@@ -237,7 +237,7 @@ export default function CloudAccounts() {
                     required
                     value={formData.accountName}
                     onChange={(e) => setFormData({ ...formData, accountName: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-border text-gray-900 dark:text-white focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-border text-gray-900 dark:text-white focus:ring-2 focus:ring-[#22c55e] focus:border-transparent"
                     placeholder="My Production Account"
                   />
                 </div>
@@ -250,7 +250,7 @@ export default function CloudAccounts() {
                     required
                     value={formData.accountId}
                     onChange={(e) => setFormData({ ...formData, accountId: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-border text-gray-900 dark:text-white focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-border text-gray-900 dark:text-white focus:ring-2 focus:ring-[#22c55e] focus:border-transparent"
                   />
                 </div>
                 <div>
@@ -261,7 +261,7 @@ export default function CloudAccounts() {
                     required
                     value={formData.apiKey}
                     onChange={(e) => setFormData({ ...formData, apiKey: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-border text-gray-900 dark:text-white focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-border text-gray-900 dark:text-white focus:ring-2 focus:ring-[#22c55e] focus:border-transparent"
                     rows="3"
                     placeholder="Paste your credentials here"
                   />
@@ -274,7 +274,7 @@ export default function CloudAccounts() {
                     type="text"
                     value={formData.region}
                     onChange={(e) => setFormData({ ...formData, region: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-border text-gray-900 dark:text-white focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-border text-gray-900 dark:text-white focus:ring-2 focus:ring-[#22c55e] focus:border-transparent"
                   />
                 </div>
                 <div className="flex gap-3 pt-4">
@@ -291,7 +291,7 @@ export default function CloudAccounts() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex-1 px-4 py-2 bg-gradient-to-br from-[#f59e0b] to-[#d97706] text-white rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
+                    className="flex-1 px-4 py-2 bg-gradient-to-br from-[#22c55e] to-[#16a34a] text-white rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
                   >
                     {loading ? 'Adding...' : 'Add Account'}
                   </button>

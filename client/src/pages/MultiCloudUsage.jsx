@@ -1,12 +1,18 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, AreaChart, Area } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, AreaChart, Area, Cell } from 'recharts';
 import { HiOutlineRefresh, HiOutlineClock, HiOutlineDatabase, HiOutlineGlobe } from 'react-icons/hi';
 
 const PROVIDER_COLORS = {
   AWS: '#FF9900',
   Azure: '#0078D4',
   GCP: '#4285F4'
+};
+
+const CHART_COLORS = {
+  compute: { gradient: ['#22c55e', '#16a34a'], bar: '#22c55e' },
+  storage: { gradient: ['#8b5cf6', '#7c3aed'], bar: '#8b5cf6' },
+  network: { gradient: ['#f59e0b', '#d97706'], bar: '#f59e0b' },
 };
 
 function CustomTooltip({ active, payload, label }) {
@@ -99,7 +105,7 @@ export default function MultiCloudUsage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-[3px] border-[#1a73e8] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-[3px] border-[#22c55e] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -124,7 +130,7 @@ export default function MultiCloudUsage() {
         </div>
         <button
           onClick={fetchUsageData}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-[#22c55e] hover:bg-[#16a34a] text-white text-sm font-medium rounded-lg transition-colors"
         >
           <HiOutlineRefresh className="w-4 h-4" />
           Refresh
@@ -135,7 +141,7 @@ export default function MultiCloudUsage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white dark:bg-dark-card rounded-xl border border-gray-100 dark:border-dark-border p-5 shadow-card">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#22c55e] to-[#16a34a] flex items-center justify-center">
               <HiOutlineClock className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -147,7 +153,7 @@ export default function MultiCloudUsage() {
 
         <div className="bg-white dark:bg-dark-card rounded-xl border border-gray-100 dark:border-dark-border p-5 shadow-card">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#8b5cf6] to-[#7c3aed] flex items-center justify-center">
               <HiOutlineDatabase className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -159,7 +165,7 @@ export default function MultiCloudUsage() {
 
         <div className="bg-white dark:bg-dark-card rounded-xl border border-gray-100 dark:border-dark-border p-5 shadow-card">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#f59e0b] to-[#d97706] flex items-center justify-center">
               <HiOutlineGlobe className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -171,7 +177,7 @@ export default function MultiCloudUsage() {
 
         <div className="bg-white dark:bg-dark-card rounded-xl border border-gray-100 dark:border-dark-border p-5 shadow-card">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#06b6d4] to-[#0891b2] flex items-center justify-center">
               <span className="text-white font-bold text-sm">API</span>
             </div>
             <div>
@@ -184,18 +190,33 @@ export default function MultiCloudUsage() {
 
       {/* Usage Comparison Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Compute Hours Chart - Green themed */}
         <div className="bg-white dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-dark-border p-5 shadow-lg h-[350px] flex flex-col">
           <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-4">Compute Hours by Provider</h3>
           <div className="flex-1 min-h-0">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={computeData}>
+                <defs>
+                  <linearGradient id="computeGrad-0" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#22c55e" stopOpacity={1} />
+                    <stop offset="100%" stopColor="#16a34a" stopOpacity={0.8} />
+                  </linearGradient>
+                  <linearGradient id="computeGrad-1" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#10b981" stopOpacity={1} />
+                    <stop offset="100%" stopColor="#059669" stopOpacity={0.8} />
+                  </linearGradient>
+                  <linearGradient id="computeGrad-2" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#34d399" stopOpacity={1} />
+                    <stop offset="100%" stopColor="#10b981" stopOpacity={0.8} />
+                  </linearGradient>
+                </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                 <XAxis dataKey="provider" tick={{ fontSize: 11 }} stroke="#94a3b8" />
                 <YAxis tick={{ fontSize: 11 }} stroke="#94a3b8" />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="hours" radius={[6, 6, 0, 0]} name="Hours">
                   {computeData.map((entry, i) => (
-                    <Bar key={i} dataKey="hours" fill={PROVIDER_COLORS[entry.provider]} />
+                    <Cell key={i} fill={`url(#computeGrad-${i})`} />
                   ))}
                 </Bar>
               </BarChart>
@@ -203,18 +224,33 @@ export default function MultiCloudUsage() {
           </div>
         </div>
 
+        {/* Storage Chart - Purple themed */}
         <div className="bg-white dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-dark-border p-5 shadow-lg h-[350px] flex flex-col">
           <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-4">Storage Usage (GB)</h3>
           <div className="flex-1 min-h-0">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={storageData}>
+                <defs>
+                  <linearGradient id="storageGrad-0" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#8b5cf6" stopOpacity={1} />
+                    <stop offset="100%" stopColor="#7c3aed" stopOpacity={0.8} />
+                  </linearGradient>
+                  <linearGradient id="storageGrad-1" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#a78bfa" stopOpacity={1} />
+                    <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0.8} />
+                  </linearGradient>
+                  <linearGradient id="storageGrad-2" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#c4b5fd" stopOpacity={1} />
+                    <stop offset="100%" stopColor="#a78bfa" stopOpacity={0.8} />
+                  </linearGradient>
+                </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                 <XAxis dataKey="provider" tick={{ fontSize: 11 }} stroke="#94a3b8" />
                 <YAxis tick={{ fontSize: 11 }} stroke="#94a3b8" />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="gb" radius={[6, 6, 0, 0]} name="GB">
                   {storageData.map((entry, i) => (
-                    <Bar key={i} dataKey="gb" fill={PROVIDER_COLORS[entry.provider]} />
+                    <Cell key={i} fill={`url(#storageGrad-${i})`} />
                   ))}
                 </Bar>
               </BarChart>
@@ -222,18 +258,33 @@ export default function MultiCloudUsage() {
           </div>
         </div>
 
+        {/* Network Chart - Amber/Orange themed */}
         <div className="bg-white dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-dark-border p-5 shadow-lg h-[350px] flex flex-col">
           <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-4">Network Transfer (GB)</h3>
           <div className="flex-1 min-h-0">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={networkData}>
+                <defs>
+                  <linearGradient id="networkGrad-0" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#f59e0b" stopOpacity={1} />
+                    <stop offset="100%" stopColor="#d97706" stopOpacity={0.8} />
+                  </linearGradient>
+                  <linearGradient id="networkGrad-1" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#fbbf24" stopOpacity={1} />
+                    <stop offset="100%" stopColor="#f59e0b" stopOpacity={0.8} />
+                  </linearGradient>
+                  <linearGradient id="networkGrad-2" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#fcd34d" stopOpacity={1} />
+                    <stop offset="100%" stopColor="#fbbf24" stopOpacity={0.8} />
+                  </linearGradient>
+                </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                 <XAxis dataKey="provider" tick={{ fontSize: 11 }} stroke="#94a3b8" />
                 <YAxis tick={{ fontSize: 11 }} stroke="#94a3b8" />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="gb" radius={[6, 6, 0, 0]} name="GB">
                   {networkData.map((entry, i) => (
-                    <Bar key={i} dataKey="gb" fill={PROVIDER_COLORS[entry.provider]} />
+                    <Cell key={i} fill={`url(#networkGrad-${i})`} />
                   ))}
                 </Bar>
               </BarChart>

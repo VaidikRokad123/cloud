@@ -68,7 +68,7 @@ export default function MultiCloudBudget() {
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-[#f59e0b] to-[#d97706] text-white text-sm font-medium rounded-lg transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-[#22c55e] to-[#16a34a] text-white text-sm font-medium rounded-lg transition-colors"
         >
           <HiOutlinePlus className="w-4 h-4" />
           Add Budget
@@ -112,7 +112,7 @@ export default function MultiCloudBudget() {
                     style={{
                       width: `${Math.min(percentage, 100)}%`,
                       background: isDanger ? 'linear-gradient(90deg, #ef4444, #dc2626)' 
-                        : isWarning ? 'linear-gradient(90deg, #f59e0b, #d97706)'
+                        : isWarning ? 'linear-gradient(90deg, #22c55e, #16a34a)'
                         : 'linear-gradient(90deg, #10b981, #059669)'
                     }}
                   />
@@ -180,7 +180,7 @@ export default function MultiCloudBudget() {
                 <select
                   value={newBudget.provider}
                   onChange={(e) => setNewBudget({ ...newBudget, provider: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-border text-gray-900 dark:text-white focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-border text-gray-900 dark:text-white focus:ring-2 focus:ring-[#22c55e] focus:border-transparent"
                 >
                   <option value="AWS">AWS</option>
                   <option value="Azure">Azure</option>
@@ -197,7 +197,7 @@ export default function MultiCloudBudget() {
                   required
                   value={newBudget.name}
                   onChange={(e) => setNewBudget({ ...newBudget, name: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-border text-gray-900 dark:text-white focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-border text-gray-900 dark:text-white focus:ring-2 focus:ring-[#22c55e] focus:border-transparent"
                   placeholder="Production Environment"
                 />
               </div>
@@ -212,7 +212,7 @@ export default function MultiCloudBudget() {
                   min="0"
                   value={newBudget.limit}
                   onChange={(e) => setNewBudget({ ...newBudget, limit: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-border text-gray-900 dark:text-white focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-dark-border rounded-lg bg-white dark:bg-dark-border text-gray-900 dark:text-white focus:ring-2 focus:ring-[#22c55e] focus:border-transparent"
                   placeholder="5000"
                 />
               </div>
@@ -227,7 +227,7 @@ export default function MultiCloudBudget() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-2 bg-gradient-to-br from-[#f59e0b] to-[#d97706] text-white rounded-lg hover:opacity-90 transition-opacity"
+                  className="flex-1 px-4 py-2 bg-gradient-to-br from-[#22c55e] to-[#16a34a] text-white rounded-lg hover:opacity-90 transition-opacity"
                 >
                   Add Budget
                 </button>

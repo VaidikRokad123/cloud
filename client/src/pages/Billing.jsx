@@ -3,7 +3,7 @@ import { billingAPI } from '../services/api';
 import { HiOutlineDownload, HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
 import toast from 'react-hot-toast';
 
-const PROVIDER_COLORS = { AWS: '#f59e0b', Azure: '#3b82f6', GCP: '#10b981' };
+const PROVIDER_COLORS = { AWS: '#22c55e', Azure: '#3b82f6', GCP: '#10b981' };
 const STATUS_STYLES = {
   paid: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400',
   pending: 'bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400',

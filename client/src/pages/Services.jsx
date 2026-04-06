@@ -138,7 +138,7 @@ export default function Services() {
             setEditingId(null); 
             setForm({ name: '', type: 'Compute', cost: '', usage: '', limit: '' }); 
           }}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#f59e0b] to-[#d97706] hover:from-[#d97706] hover:to-[#b45309] text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-glow hover:shadow-glow-lg transform hover:scale-[1.02] active:scale-100"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-glow hover:shadow-glow-lg transform hover:scale-[1.02] active:scale-100"
         >
           <HiOutlinePlus className="w-4 h-4" />
           Add Service
@@ -201,7 +201,7 @@ export default function Services() {
                   placeholder="$2,000/mo"
                   className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-dark-border bg-white dark:bg-dark-bg text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1a73e8]"
                 />
-                <button type="submit" className="px-4 py-2 bg-gradient-to-r from-[#f59e0b] to-[#d97706] hover:from-[#d97706] hover:to-[#b45309] text-white text-sm font-semibold rounded-lg shrink-0 transition-all duration-200">
+                <button type="submit" className="px-4 py-2 bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white text-sm font-semibold rounded-lg shrink-0 transition-all duration-200">
                   {editingId ? 'Save' : 'Add'}
                 </button>
               </div>
@@ -217,7 +217,7 @@ export default function Services() {
           <button key={t} onClick={() => setFilter(t)}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
               filter === t
-                ? 'bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white shadow-sm'
+                ? 'bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white shadow-sm'
                 : 'bg-gray-100 dark:bg-dark-card text-gray-600 dark:text-dark-muted hover:bg-gray-200 dark:hover:bg-dark-border'
             }`}>
             {t}

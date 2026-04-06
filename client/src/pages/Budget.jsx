@@ -96,7 +96,7 @@ export default function Budget() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-[3px] border-[#f59e0b] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-[3px] border-[#22c55e] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -150,7 +150,7 @@ export default function Budget() {
                 type="number"
                 value={budgetInput}
                 onChange={e => setBudgetInput(Number(e.target.value))}
-                className="w-full pl-7 pr-4 py-2.5 rounded-lg border border-gray-200 dark:border-dark-border bg-white dark:bg-dark-bg text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#f59e0b]"
+                className="w-full pl-7 pr-4 py-2.5 rounded-lg border border-gray-200 dark:border-dark-border bg-white dark:bg-dark-bg text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#22c55e]"
               />
             </div>
           </div>
@@ -158,7 +158,7 @@ export default function Budget() {
           {/* Alert Threshold Slider */}
           <div className="mb-5">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
-              Alert Threshold: <span className="text-[#f59e0b] font-bold">{threshold}%</span>
+              Alert Threshold: <span className="text-[#22c55e] font-bold">{threshold}%</span>
             </label>
             <input
               type="range"
@@ -167,14 +167,14 @@ export default function Budget() {
               step="5"
               value={threshold}
               onChange={e => setThreshold(Number(e.target.value))}
-              className="w-full h-2 bg-gray-200 dark:bg-dark-border rounded-lg appearance-none cursor-pointer accent-[#f59e0b]"
+              className="w-full h-2 bg-gray-200 dark:bg-dark-border rounded-lg appearance-none cursor-pointer accent-[#22c55e]"
             />
             <div className="flex justify-between mt-1">
               {THRESHOLDS.map(t => (
                 <button
                   key={t}
                   onClick={() => setThreshold(t)}
-                  className={`text-xs px-2 py-0.5 rounded ${threshold === t ? 'bg-[#f59e0b] text-white' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}
+                  className={`text-xs px-2 py-0.5 rounded ${threshold === t ? 'bg-[#22c55e] text-white' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}
                 >
                   {t}%
                 </button>
@@ -210,7 +210,7 @@ export default function Budget() {
 
           <button
             onClick={handleSave}
-            className="w-full bg-gradient-to-r from-[#f59e0b] to-[#d97706] hover:from-[#d97706] hover:to-[#b45309] text-white font-semibold py-2.5 rounded-lg text-sm transition-all duration-200"
+            className="w-full bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] text-white font-semibold py-2.5 rounded-lg text-sm transition-all duration-200"
           >
             Save Settings
           </button>
@@ -219,7 +219,7 @@ export default function Budget() {
         {/* Service-Specific Alerts */}
         <div className="bg-white dark:bg-dark-card rounded-xl border border-gray-100 dark:border-dark-border p-6 shadow-card">
           <div className="flex items-center gap-2 mb-5">
-            <HiOutlineBell className="w-5 h-5 text-[#f59e0b]" />
+            <HiOutlineBell className="w-5 h-5 text-[#22c55e]" />
             <h3 className="text-sm font-semibold text-gray-800 dark:text-white">Service Alerts</h3>
             <span className="ml-auto text-xs text-gray-500 dark:text-dark-muted">{alerts.length} active</span>
           </div>

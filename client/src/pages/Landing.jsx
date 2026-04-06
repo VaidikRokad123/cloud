@@ -21,11 +21,11 @@ const features = [
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-primary-950 text-white flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-[#111111] text-white flex flex-col">
       {/* Navbar */}
       <header className="flex items-center justify-between px-6 lg:px-12 h-16 border-b border-white/5">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-[#22c55e] flex items-center justify-center">
             <HiOutlineCloud className="w-5 h-5 text-white" />
           </div>
           <span className="font-bold text-lg tracking-tight">CloudCost</span>
@@ -36,7 +36,7 @@ export default function Landing() {
           </Link>
           <Link
             to="/signup"
-            className="text-sm font-medium bg-primary-600 hover:bg-primary-500 px-4 py-2 rounded-lg transition-colors"
+            className="text-sm font-medium bg-[#22c55e] hover:bg-[#16a34a] px-4 py-2 rounded-lg transition-colors"
           >
             Start Free
           </Link>
@@ -46,14 +46,14 @@ export default function Landing() {
       {/* Hero */}
       <main className="flex-1 flex flex-col items-center justify-center px-6 text-center">
         <div className="max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-xs font-medium text-primary-300 mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-xs font-medium text-[#4ade80] mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
             Now monitoring 3 cloud providers
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight mb-5">
             Take control of your
-            <span className="bg-gradient-to-r from-primary-400 to-cyan-400 bg-clip-text text-transparent"> cloud costs</span>
+            <span className="bg-gradient-to-r from-[#22c55e] to-[#4ade80] bg-clip-text text-transparent"> cloud costs</span>
           </h1>
 
           <p className="text-base sm:text-lg text-gray-400 max-w-xl mx-auto mb-8 leading-relaxed">
@@ -63,7 +63,7 @@ export default function Landing() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               to="/signup"
-              className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-500 text-white font-semibold px-6 py-3 rounded-xl transition-all shadow-lg shadow-primary-600/25 hover:shadow-primary-500/40"
+              className="inline-flex items-center gap-2 bg-[#22c55e] hover:bg-[#16a34a] text-white font-semibold px-6 py-3 rounded-xl transition-all shadow-lg shadow-[#22c55e]/25 hover:shadow-[#16a34a]/40"
             >
               Get Started Free
               <HiArrowRight className="w-4 h-4" />
@@ -84,8 +84,8 @@ export default function Landing() {
               key={i}
               className="bg-white/5 border border-white/5 rounded-xl p-5 text-left hover:bg-white/[0.07] transition-colors"
             >
-              <div className="w-10 h-10 rounded-lg bg-primary-600/20 flex items-center justify-center mb-3">
-                <f.icon className="w-5 h-5 text-primary-400" />
+              <div className="w-10 h-10 rounded-lg bg-[#22c55e]/20 flex items-center justify-center mb-3">
+                <f.icon className="w-5 h-5 text-[#22c55e]" />
               </div>
               <h3 className="text-sm font-semibold mb-1.5">{f.title}</h3>
               <p className="text-xs text-gray-400 leading-relaxed">{f.desc}</p>

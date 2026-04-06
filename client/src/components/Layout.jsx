@@ -9,7 +9,7 @@ export default function Layout() {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-[#f8f9fb] dark:bg-[#0c1222]">
+    <div className="min-h-screen bg-[#f8f9fb] dark:bg-[#050505]">
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <div className="lg:ml-[260px] flex flex-col min-h-screen">

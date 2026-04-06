@@ -4,7 +4,7 @@ import {
   BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
 } from 'recharts';
 
-const PROVIDER_COLORS = { AWS: '#f59e0b', Azure: '#3b82f6', GCP: '#10b981' };
+const PROVIDER_COLORS = { AWS: '#22c55e', Azure: '#3b82f6', GCP: '#10b981' };
 
 function CustomTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null;
@@ -85,7 +85,7 @@ export default function Analytics() {
             <YAxis tick={{ fontSize: 11 }} stroke="#94a3b8" tickFormatter={v => `$${v}`} />
             <Tooltip content={<CustomTooltip />} />
             <Legend />
-            <Bar dataKey="AWS" fill="#f59e0b" radius={[2, 2, 0, 0]} />
+            <Bar dataKey="AWS" fill="#22c55e" radius={[2, 2, 0, 0]} />
             <Bar dataKey="Azure" fill="#3b82f6" radius={[2, 2, 0, 0]} />
             <Bar dataKey="GCP" fill="#10b981" radius={[2, 2, 0, 0]} />
           </BarChart>
@@ -155,7 +155,7 @@ export default function Analytics() {
             {overview?.byResourceType?.map((r, i) => {
               const total = overview.byResourceType.reduce((s, t) => s + t.total, 0);
               const pct = ((r.total / total) * 100).toFixed(1);
-              const colors = { compute: '#2563eb', storage: '#f59e0b', network: '#10b981', database: '#8b5cf6', other: '#6b7280' };
+              const colors = { compute: '#2563eb', storage: '#22c55e', network: '#10b981', database: '#8b5cf6', other: '#6b7280' };
               return (
                 <div key={i}>
                   <div className="flex justify-between text-sm mb-1">

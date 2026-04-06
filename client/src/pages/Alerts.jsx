@@ -179,7 +179,7 @@ export default function Alerts() {
                     className="h-full rounded-full transition-all duration-700"
                     style={{
                       width: `${pct}%`,
-                      backgroundColor: isTriggered ? '#ef4444' : pct > 80 ? '#f59e0b' : '#10b981'
+                      backgroundColor: isTriggered ? '#ef4444' : pct > 80 ? '#22c55e' : '#10b981'
                     }}
                   />
                 </div>

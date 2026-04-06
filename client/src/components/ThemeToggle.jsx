@@ -24,7 +24,7 @@ export default function ThemeToggle() {
         height: 0;
         border-radius: 50%;
         transform: translate(-50%, -50%);
-        background-color: ${dark ? '#ffffff' : '#0B0F19'};
+        background-color: ${dark ? '#ffffff' : '#050505'};
         z-index: 9999;
         pointer-events: none;
         transition: width 0.4s ease-out, height 0.4s ease-out;

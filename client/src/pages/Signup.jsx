@@ -37,15 +37,15 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] flex">
+    <div className="min-h-screen bg-[#050505] flex">
       {/* LEFT SIDE - Branding */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0B0F19] via-[#111827] to-[#1F2937]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(245,158,11,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-[#111111]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(34,197,94,0.08),transparent_50%)]" />
         
         <div className="relative z-10 flex flex-col justify-center px-16 w-full">
           <div className="flex items-center gap-3 mb-12">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#f59e0b] to-[#d97706] flex items-center justify-center shadow-glow">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#22c55e] to-[#16a34a] flex items-center justify-center shadow-glow">
               <HiOutlineCloud className="w-7 h-7 text-white" />
             </div>
             <span className="font-bold text-3xl text-white tracking-tight">CloudCost</span>
@@ -53,7 +53,7 @@ export default function Signup() {
 
           <h1 className="text-4xl font-bold text-white mb-4 leading-tight">
             Start optimizing your<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f59e0b] to-[#fbbf24]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#22c55e] to-[#4ade80]">
               cloud spending
             </span>
           </h1>
@@ -69,7 +69,7 @@ export default function Signup() {
             ].map((feature, i) => (
               <div key={i} className="flex items-center gap-3 text-gray-300">
                 <div className="w-8 h-8 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center">
-                  <feature.icon className="w-4 h-4 text-[#f59e0b]" />
+                  <feature.icon className="w-4 h-4 text-[#22c55e]" />
                 </div>
                 <span className="text-sm">{feature.text}</span>
               </div>
@@ -82,13 +82,13 @@ export default function Signup() {
       <div className="flex-1 flex items-center justify-center px-6 lg:px-16">
         <div className="w-full max-w-md">
           <div className="lg:hidden flex items-center justify-center gap-2.5 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#f59e0b] to-[#d97706] flex items-center justify-center shadow-glow">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#22c55e] to-[#16a34a] flex items-center justify-center shadow-glow">
               <HiOutlineCloud className="w-6 h-6 text-white" />
             </div>
             <span className="font-bold text-2xl text-white tracking-tight">CloudCost</span>
           </div>
 
-          <div className="bg-[#111827]/60 backdrop-blur-xl rounded-2xl border border-[#1F2937] shadow-2xl p-8">
+          <div className="bg-[#0a0a0a]/60 backdrop-blur-xl rounded-2xl border border-[#1a1a1a] shadow-2xl p-8">
             <h2 className="text-2xl font-bold text-white mb-2">Create your account</h2>
             <p className="text-sm text-gray-400 mb-8">Start monitoring your cloud costs today</p>
 
@@ -103,7 +103,7 @@ export default function Signup() {
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     placeholder="Jane Smith"
-                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-[#1F2937] bg-[#0B0F19]/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent text-sm transition-all"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-[#1a1a1a] bg-[#050505]/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#22c55e] focus:border-transparent text-sm transition-all"
                   />
                 </div>
               </div>
@@ -118,7 +118,7 @@ export default function Signup() {
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     placeholder="you@company.com"
-                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-[#1F2937] bg-[#0B0F19]/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent text-sm transition-all"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-[#1a1a1a] bg-[#050505]/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#22c55e] focus:border-transparent text-sm transition-all"
                   />
                 </div>
               </div>
@@ -133,7 +133,7 @@ export default function Signup() {
                     value={form.password}
                     onChange={(e) => setForm({ ...form, password: e.target.value })}
                     placeholder="Min 6 characters"
-                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-[#1F2937] bg-[#0B0F19]/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent text-sm transition-all"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-[#1a1a1a] bg-[#050505]/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#22c55e] focus:border-transparent text-sm transition-all"
                   />
                 </div>
               </div>
@@ -148,7 +148,7 @@ export default function Signup() {
                     value={form.confirmPassword}
                     onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
                     placeholder="••••••••"
-                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-[#1F2937] bg-[#0B0F19]/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent text-sm transition-all"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-[#1a1a1a] bg-[#050505]/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#22c55e] focus:border-transparent text-sm transition-all"
                   />
                 </div>
               </div>
@@ -156,7 +156,7 @@ export default function Signup() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-[#f59e0b] to-[#d97706] hover:from-[#d97706] hover:to-[#b45309] disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition-all duration-200 text-sm shadow-glow hover:shadow-glow-lg transform hover:scale-[1.02] active:scale-100"
+                className="w-full bg-gradient-to-r from-[#22c55e] to-[#16a34a] hover:from-[#16a34a] hover:to-[#15803d] disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition-all duration-200 text-sm shadow-glow hover:shadow-glow-lg transform hover:scale-[1.02] active:scale-100"
               >
                 {loading ? 'Creating account…' : 'Create Account'}
               </button>
@@ -164,7 +164,7 @@ export default function Signup() {
 
             <p className="mt-6 text-center text-sm text-gray-400">
               Already have an account?{' '}
-              <Link to="/login" className="text-[#f59e0b] hover:text-[#fbbf24] font-medium transition-colors">
+              <Link to="/login" className="text-[#22c55e] hover:text-[#4ade80] font-medium transition-colors">
                 Sign in
               </Link>
             </p>

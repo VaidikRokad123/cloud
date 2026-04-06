@@ -7,7 +7,7 @@ import {
 } from 'recharts';
 import { HiOutlineDownload, HiOutlineTrendingUp, HiOutlineTrendingDown } from 'react-icons/hi';
 
-const SERVICE_COLORS = ['#1a73e8', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6', '#ec4899'];
+const SERVICE_COLORS = ['#1a73e8', '#22c55e', '#10b981', '#ef4444', '#8b5cf6', '#ec4899'];
 const DATE_RANGES = [
   { label: 'This Week', value: 'week' },
   { label: 'This Month', value: 'month' },

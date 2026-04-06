@@ -10,8 +10,8 @@ import {
   HiOutlineCurrencyDollar, HiOutlineTrendingUp, HiOutlineChartPie, HiOutlineCalendar
 } from 'react-icons/hi';
 
-const SERVICE_COLORS = ['#1a73e8', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6', '#ec4899'];
-const TYPE_COLORS = { Compute: '#1a73e8', Storage: '#f59e0b', Database: '#8b5cf6', Network: '#10b981' };
+const SERVICE_COLORS = ['#3b82f6', '#f59e0b', '#22c55e', '#ef4444', '#8b5cf6', '#ec4899'];
+const TYPE_COLORS = { Compute: '#3b82f6', Storage: '#f59e0b', Database: '#8b5cf6', Network: '#22c55e' };
 
 // Reusable Card Component
 function Card({ title, children, className = '' }) {
@@ -117,7 +117,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-[3px] border-[#1a73e8] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-[3px] border-[#22c55e] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -154,7 +154,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard title="Total Cost (This Month)" value={rawConvert(summary?.totalCost || 0)}
           displayValue={(v) => `${currencySymbol}${v.toLocaleString()}`}
-          icon={HiOutlineCurrencyDollar} color="bg-gradient-to-br from-[#f59e0b] to-[#d97706]" delay={1} />
+          icon={HiOutlineCurrencyDollar} color="bg-gradient-to-br from-[#22c55e] to-[#16a34a]" delay={1} />
         <StatCard title="Budget" value={rawConvert(summary?.budget || 0)}
           displayValue={(v) => `${currencySymbol}${v.toLocaleString()}`}
           icon={HiOutlineChartPie} color="bg-gradient-to-br from-emerald-500 to-emerald-600" delay={2} />
@@ -180,7 +180,7 @@ export default function Dashboard() {
               width: `${Math.min(budgetPercent, 100)}%`,
               background: budgetPercent > 80 ? 'linear-gradient(90deg, #ef4444, #dc2626)'
                 : budgetPercent > 60 ? 'linear-gradient(90deg, #f59e0b, #d97706)'
-                  : 'linear-gradient(90deg, #10b981, #059669)',
+                  : 'linear-gradient(90deg, #22c55e, #16a34a)',
             }} />
         </div>
         <p className="text-xs text-gray-400 dark:text-dark-muted mt-2">
@@ -194,15 +194,15 @@ export default function Dashboard() {
             <AreaChart data={dailyConverted}>
               <defs>
                 <linearGradient id="dailyGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#1a73e8" stopOpacity={0.2} />
-                  <stop offset="95%" stopColor="#1a73e8" stopOpacity={0} />
+                  <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.2} />
+                  <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
               <XAxis dataKey="date" tick={{ fontSize: 11 }} tickFormatter={v => v.slice(5)} stroke="#94a3b8" />
               <YAxis tick={{ fontSize: 11 }} stroke="#94a3b8" tickFormatter={v => `${currencySymbol}${v}`} />
               <Tooltip content={<CustomTooltip />} />
-              <Area type="monotone" dataKey="cost" stroke="#1a73e8" fill="url(#dailyGrad)" strokeWidth={2.5} name="Daily Cost" />
+              <Area type="monotone" dataKey="cost" stroke="#3b82f6" fill="url(#dailyGrad)" strokeWidth={2.5} name="Daily Cost" />
             </AreaChart>
           </ResponsiveContainer>
         </ChartWrapper>
@@ -286,15 +286,15 @@ export default function Dashboard() {
               <AreaChart data={cumulativeDaily}>
                 <defs>
                   <linearGradient id="cumGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.2} />
-                    <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.2} />
+                    <stop offset="95%" stopColor="#06b6d4" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                 <XAxis dataKey="date" tick={{ fontSize: 11 }} tickFormatter={v => v.slice(5)} stroke="#94a3b8" />
                 <YAxis tick={{ fontSize: 11 }} stroke="#94a3b8" tickFormatter={v => `${currencySymbol}${v.toLocaleString()}`} />
                 <Tooltip content={<CustomTooltip />} />
-                <Area type="monotone" dataKey="cumulative" stroke="#8b5cf6" fill="url(#cumGrad)" strokeWidth={2} name="Cumulative" />
+                <Area type="monotone" dataKey="cumulative" stroke="#06b6d4" fill="url(#cumGrad)" strokeWidth={2} name="Cumulative" />
               </AreaChart>
             </ResponsiveContainer>
           </ChartWrapper>
@@ -312,7 +312,7 @@ export default function Dashboard() {
               <div>
                 <p className="text-sm font-semibold text-gray-900 dark:text-white">{s.name}</p>
                 <p className="text-xs text-gray-500 dark:text-dark-muted">{s.type}</p>
-                <p className="text-sm font-bold text-[#1a73e8] mt-0.5">{convertCost(s.cost)}</p>
+                <p className="text-sm font-bold text-[#22c55e] mt-0.5">{convertCost(s.cost)}</p>
               </div>
             </div>
           ))}

@@ -43,7 +43,7 @@ export default function PageTransition({ children }) {
     <>
       {/* Progress bar */}
       <div
-        className={`fixed top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#f59e0b] via-[#fbbf24] to-[#f59e0b] z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#22c55e] via-[#4ade80] to-[#22c55e] z-50 transition-all duration-300 ${
           progress > 0 && progress < 100 ? 'opacity-100' : 'opacity-0'
         }`}
         style={{ width: `${progress}%` }}
@@ -51,7 +51,7 @@ export default function PageTransition({ children }) {
 
       {/* Loading overlay */}
       <div
-        className={`fixed inset-0 bg-[#0B0F19]/20 backdrop-blur-sm z-40 pointer-events-none transition-opacity duration-200 ${
+        className={`fixed inset-0 bg-[#050505]/20 backdrop-blur-sm z-40 pointer-events-none transition-opacity duration-200 ${
           transitionStage === 'fadeOut' ? 'opacity-100' : 'opacity-0'
         }`}
       />
